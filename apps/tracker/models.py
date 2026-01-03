@@ -9,7 +9,8 @@ class ResourceType(Enum):
     BOSS = 3
     MONSTER = 4
     WANTED = 5
-    QUEST = 6
+    CARD = 6
+    QUEST = 7
 
 
 class Resource(models.Model):
