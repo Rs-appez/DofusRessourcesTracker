@@ -39,7 +39,7 @@ class ResourceImage(models.Model):
 
 class ResourceValue(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
-    value = models.FloatField()
+    value = models.SmallIntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -48,8 +48,8 @@ class ResourceValue(models.Model):
 
 class BuyIn(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
-    price = models.FloatField()
-    quantity = models.IntegerField()
+    price = models.SmallIntegerField()
+    quantity = models.SmallIntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -58,8 +58,8 @@ class BuyIn(models.Model):
 
 class SellOut(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
-    price = models.FloatField()
-    quantity = models.IntegerField()
+    price = models.SmallIntegerField()
+    quantity = models.SmallIntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
