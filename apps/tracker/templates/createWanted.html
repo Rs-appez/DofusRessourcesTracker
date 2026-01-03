@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Create Wanted</title>
+    </head>
+    <body>
+        <h1>Create a New Wanted Entry</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required />
+            <br>
+            <label for="wanted_name">Wanted Name:</label>
+            <input type="text" id="wanted_name" name="wanted_name" required />
+            <br>
+            <label for="nb">NB:</label>
+            <input type="text" id="nb" name="nb" required />
+            <br>
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required />
+            <br>
+            <input type="submit" value="Create Wanted Entry" />
+        </form>
+    </body>
+</html>
