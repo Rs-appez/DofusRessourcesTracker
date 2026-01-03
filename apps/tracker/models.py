@@ -13,10 +13,10 @@ class ResourceType(Enum):
     QUEST = 7
 
 
-class Ressource(models.Model):
+class Resource(models.Model):
     name = models.CharField(max_length=255)
     image = models.ForeignKey(
-        "RessourceImage", on_delete=models.SET_NULL, null=True, blank=True
+        "ResourceImage", on_delete=models.SET_NULL, null=True, blank=True
     )
     resource_type = models.IntegerField(
         choices=[(tag.value, tag.name) for tag in ResourceType]
@@ -29,7 +29,7 @@ class Ressource(models.Model):
         return self.name
 
 
-class RessourceImage(models.Model):
+class ResourceImage(models.Model):
     name = models.CharField(max_length=255, unique=True, null=True, blank=True)
     image = models.ImageField(upload_to="resources/images/")
 
@@ -37,8 +37,8 @@ class RessourceImage(models.Model):
         return self.name if self.name else f"Image {self.id}"
 
 
-class RessourceValue(models.Model):
-    resource = models.ForeignKey(Ressource, on_delete=models.CASCADE)
+class ResourceValue(models.Model):
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     value = models.FloatField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -47,7 +47,7 @@ class RessourceValue(models.Model):
 
 
 class BuyIn(models.Model):
-    resource = models.ForeignKey(Ressource, on_delete=models.CASCADE)
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     price = models.FloatField()
     quantity = models.IntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -57,7 +57,7 @@ class BuyIn(models.Model):
 
 
 class SellOut(models.Model):
-    resource = models.ForeignKey(Ressource, on_delete=models.CASCADE)
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     price = models.FloatField()
     quantity = models.IntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)

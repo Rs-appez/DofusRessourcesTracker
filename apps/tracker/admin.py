@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import Ressource, RessourceValue, BuyIn, SellOut, RessourceImage
+from .models import Resource, ResourceValue, BuyIn, SellOut, ResourceImage
 
-admin.site.register(RessourceValue)
+admin.site.register(ResourceValue)
 admin.site.register(BuyIn)
 admin.site.register(SellOut)
-admin.site.register(RessourceImage)
+admin.site.register(ResourceImage)
 
 
-@admin.register(Ressource)
+@admin.register(Resource)
 class ResourceAdmin(admin.ModelAdmin):
     save_as = True
