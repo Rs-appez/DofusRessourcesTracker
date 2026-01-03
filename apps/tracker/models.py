@@ -30,3 +30,23 @@ class RessourceValue(models.Model):
 
     def __str__(self):
         return f"{self.resource.name} at {self.timestamp}"
+
+
+class BuyIn(models.Model):
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
+    price = models.FloatField()
+    quantity = models.IntegerField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"BuyIn of {self.quantity} {self.resource.name} at {self.price} on {self.timestamp}"
+
+
+class SellOut(models.Model):
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
+    price = models.FloatField()
+    quantity = models.IntegerField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"SellOut of {self.quantity} {self.resource.name} at {self.price} on {self.timestamp}"
