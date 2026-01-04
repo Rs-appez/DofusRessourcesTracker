@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{{ wanted.name }}</title>
+        <link href="{% static 'tracker/css/wanted_detail.css' %}" rel="stylesheet" />
+        <link href="{% static 'tracker/css/base.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="wanted-detail-container">
+            <h1>{{ wanted.name }}</h1>
+            <div class="wanted-info">
+                <div class="wanted-image">
+                    <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
+                </div>
+                <div class="cards-section">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{ card.image.image.url }}" alt="{{ card.title }}" />
+                        </div>
+                        <div class="card-info">
+                            <h2>{{ card.name }}</h2>
+                        </div>
+                    </div>
+                    {% for fragment in fragments %}
+                        <div class="fragment">
+                            <div class="fragment-image">
+                                <img src="{{ fragment.image.image.url }}"
+                                     alt="Fragment {{ forloop.counter }}" />
+                            </div>
+                            <div class="fragment-info">
+                                <h3>{{ fragment.name }}</h3>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>No fragments available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
