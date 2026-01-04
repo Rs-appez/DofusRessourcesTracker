@@ -1,5 +1,6 @@
 :root {
   --primary-color: #4a90e2;
+  --primary-color-hover: #357abd;
   --secondary-color: #50e3c2;
 
   --font-color: #333333;
@@ -7,8 +8,11 @@
   --background-color: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   --background-color-image: #f5f5f5;
   --border-radius: 8px;
+
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --box-shadow-hover: 0 12px 16px rgba(0, 0, 0, 0.15);
+  --box-shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.3);
+  --box-shadow-focus: 0 0 0 3px rgba(74, 144, 226, 0.3);
 }
 * {
   margin: 0;
