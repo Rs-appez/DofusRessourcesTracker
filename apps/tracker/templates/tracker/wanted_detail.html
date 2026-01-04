@@ -1,71 +1,44 @@
+{% extends 'layout.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{{ wanted.name }}</title>
-        <link href="{% static 'tracker/css/wanted_detail.css' %}" rel="stylesheet" />
-        <link href="{% static 'tracker/css/base.css' %}" rel="stylesheet" />
-    </head>
-    <body>
-        {{ wanted_values }}
-        <div class="wanted-detail-container">
-            <h1>{{ wanted.name }}</h1>
-            <div class="wanted-info">
-                <div class="wanted-section">
-                    <div class="wanted-image">
-                        <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
-                    </div>
-                    <div class="wanted-price">
-                        <h2>Current Price: {{ last_wanted_value }} K</h2>
-                        <h3>Average Price: {{ average_wanted_values }} K</h3>
-                    </div>
-                    <div class="wanted-sell">
-                        <h2>Last Sell : {{ last_wanted_sell_value }} K</h2>
-                        <h3>Average Sell : {{ average_wanted_sell_values }} K</h3>
-                    </div>
+{% block title %}{{ wanted.name }}{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'tracker/css/wanted_detail.css' %}" rel="stylesheet" />
+{% endblock %}
+{% block content %}
+    <div class="wanted-detail-container">
+        <h1>{{ wanted.name }}</h1>
+        <div class="wanted-info">
+            <div class="wanted-section">
+                <div class="wanted-image">
+                    <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
                 </div>
-                <div class="cards-section">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="{{ card.image.image.url }}" alt="{{ card.title }}" />
-                        </div>
-                        <div class="card-info">
-                            <h2>{{ card.name }}</h2>
-                        </div>
-                        <div class="card-price">
-                            <h3>Current Price: {{ last_card_value }} K</h3>
-                            <h4>Average Price: {{ average_card_values }} K</h4>
-                        </div>
-                        <div class="card-buy">
-                            <h3>Last Buy : {{ last_card_buy_value }} K</h3>
-                            <h4>Average Buy : {{ average_card_buy_values }} K</h4>
-                        </div>
-                    </div>
-                    {% for fragment in fragments %}
-                        <div class="fragment">
-                            <div class="fragment-image">
-                                <img src="{{ fragment.image.image.url }}"
-                                     alt="Fragment {{ forloop.counter }}" />
-                            </div>
-                            <div class="fragment-info">
-                                <h3>{{ fragment.name }}</h3>
-                            </div>
-                            <div class="fragment-price">
-                                <h4>Current Price: {{ fragment.last_fragment_value }} K</h4>
-                                <h5>Average Price: {{ fragment.average_fragment_values }} K</h5>
-                            </div>
-                            <div class="fragment-buy">
-                                <h4>Last Buy : {{ fragment.last_fragment_buy_value }} K</h4>
-                                <h5>Average Buy : {{ fragment.average_fragment_buy_values }} K</h5>
-                            </div>
-                        </div>
-                    {% empty %}
-                        <p>No fragments available.</p>
-                    {% endfor %}
+                <div class="wanted-price">
+                    <h2>Current Price: {{ wanted.current_value }} K</h2>
+                    <h3>Average Price: {{ wanted.average_value }} K</h3>
+                </div>
+                <div class="wanted-sell">
+                    <h2>Last Sell : {{ wanted.last_sell_value }} K</h2>
+                    <h3>Average Sell : {{ wanted.average_sell_values }} K</h3>
                 </div>
             </div>
+            <div class="cards-section">
+                {% for card in cards %}
+                    <div class="card open-value-modal"
+                         data-name="{{ card.name }}"
+                         data-id="{{ card.id }}">
+                        <div class="card-image">
+                            <img src="{{ card.image.image.url }}" alt="Fragment {{ forloop.counter }}" />
+                        </div>
+                        <div class="card-info">
+                            <h3>{{ card.name }}</h3>
+                        </div>
+                        {% include 'tracker/partials/card-price.html' %}
+                    </div>
+                {% empty %}
+                    <p>No card available.</p>
+                {% endfor %}
+            </div>
         </div>
-    </body>
-</html>
+    </div>
+    {% include 'tracker/partials/value_modal.html' %}
+{% endblock %}

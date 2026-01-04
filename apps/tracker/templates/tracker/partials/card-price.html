@@ -1,0 +1,16 @@
+{% if card is None %}
+    <p>No data available.</p>
+{% else %}
+    <div class="card-price" id="card-price-{{ card.id }}">
+        {% if card.current_value is None %}
+            <h4>No data yet</h4>
+        {% else %}
+            <h4>Current Price: {{ card.current_value }} K</h4>
+            <h5>Average Price: {{ card.average_value }} K</h5>
+        {% endif %}
+    </div>
+    <!-- <div class="fragment-buy"> -->
+    <!--     <h4>Last Buy : {{ fragment.last_fragment_buy_value }} K</h4> -->
+    <!--     <h5>Average Buy : {{ fragment.average_fragment_buy_values }} K</h5> -->
+    <!-- </div> -->
+{% endif %}

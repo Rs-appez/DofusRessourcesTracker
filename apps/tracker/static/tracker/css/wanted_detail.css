@@ -95,8 +95,7 @@
   gap: 1.5rem;
 }
 
-.card,
-.fragment {
+.card {
   background: white;
   border-radius: 12px;
   overflow: hidden;
@@ -106,76 +105,65 @@
     box-shadow 0.3s ease;
 }
 
-.card:hover,
-.fragment:hover {
+.card:hover {
   transform: translateY(-8px);
   box-shadow: var(--box-shadow-hover);
 }
 
-.card-image,
-.fragment-image {
+.card-image {
   width: 100%;
   height: 180px;
   overflow: hidden;
   background: var(--bg-secondary);
 }
 
-.card-image img,
-.fragment-image img {
+.card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.card-info,
-.fragment-info {
+.card-info {
   padding: 1rem;
   border-bottom: 1px solid var(--border-color);
 }
 
-.card-info h2,
-.fragment-info h3 {
+.card-info h2 {
   font-size: 1.1rem;
   color: var(--font-color);
   margin: 0;
 }
 
-.card-price,
-.fragment-price {
+.card-price {
   padding: 1rem;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
 }
 
-.card-price h3,
-.fragment-price h4 {
+.card-price h3 {
   font-size: 0.95rem;
   color: var(--font-color);
   margin: 0.5rem 0 0 0;
 }
 
-.card-price h4,
-.fragment-price h5 {
+.card-price h4 {
   font-size: 0.85rem;
   color: var(--font-color-secondary);
   margin: 0.25rem 0 0 0;
 }
 
-.card-buy,
-.fragment-buy {
+.card-buy {
   padding: 1rem;
 }
 
-.card-buy h3,
-.fragment-buy h4 {
+.card-buy h3 {
   font-size: 0.95rem;
   color: var(--font-color);
   margin: 0.5rem 0 0 0;
 }
 
-.card-buy h4,
-.fragment-buy h5 {
+.card-buy h4 {
   font-size: 0.85rem;
   color: var(--font-color-secondary);
   margin: 0.25rem 0 0 0;
@@ -187,23 +175,4 @@
   color: var(--font-color-secondary);
   padding: 2rem;
   font-size: 1rem;
-}
-
-@media (max-width: 768px) {
-  .wanted-detail-container {
-    padding: 1rem;
-  }
-
-  .wanted-detail-container h1 {
-    font-size: 1.8rem;
-  }
-
-  .wanted-header {
-    grid-template-columns: 1fr;
-  }
-
-  .cards-section {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
-  }
 }

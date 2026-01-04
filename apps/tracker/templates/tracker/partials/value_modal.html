@@ -1,0 +1,17 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'tracker/css/modal.css' %}" />
+<script src="{% static 'tracker/js/value_modal.js' %}" defer></script>
+<dialog id="cardDialog" class="cardDialog" closedby="any">
+    <div class="dialog-content">
+        <h2>Enter the current value for :</h2>
+        <h3 id="modalName"></h3>
+        <form hx-post="{% url 'tracker:add_value' 0 %}"
+              class="modal-form"
+              id="valueForm">
+            {% csrf_token %}
+            <input type="hidden" id="item_id" name="item_id" value="" />
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+</dialog>
