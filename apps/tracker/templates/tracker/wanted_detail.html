@@ -5,6 +5,9 @@
     <link href="{% static 'tracker/css/wanted_detail.css' %}" rel="stylesheet" />
 {% endblock %}
 {% block content %}
+    <div class="back-link">
+        <a href="{% url 'tracker:wanted' %}">Back to Wanted List</a>
+    </div>
     <div class="wanted-detail-container">
         <h1>{{ wanted.name }}</h1>
         <div class="wanted-info">

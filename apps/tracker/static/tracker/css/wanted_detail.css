@@ -176,3 +176,27 @@
   padding: 2rem;
   font-size: 1rem;
 }
+.back-link {
+  margin-bottom: 1.5rem;
+  position: absolute;
+}
+
+.back-link a {
+  display: inline-block;
+  padding: 0.5em 1.2em;
+  background-color: var(--primary-color);
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.back-link a:hover {
+  background-color: var(--primary-color-hover);
+  color: #fff;
+  text-decoration: none;
+}
