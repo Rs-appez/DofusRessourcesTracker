@@ -1,25 +1,17 @@
+{% extends 'layout.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Dashboard</title>
-        <link href="{% static 'tracker/css/dashboard.css' %}" rel="stylesheet" />
-        <link href="{% static 'tracker/css/base.css' %}" rel="stylesheet" />
-    </head>
-    <body>
-        <header>
-            <h1>Dashboard</h1>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="{% url 'tracker:wanted' %}">View Wanted Entry</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'tracker:create_wanted' %}">Create Wanted Entry</a>
-                    </li>
-                </ul>
-            </nav>
-        </body>
-    </html>
+{% block title %}Dashboard{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'tracker/css/dashboard.css' %}" rel="stylesheet" />
+{% endblock %}
+{% block content %}
+    <h1>Dashboard</h1>
+    <ul>
+        <li>
+            <a href="{% url 'tracker:wanted' %}">View Wanted Entry</a>
+        </li>
+        <li>
+            <a href="{% url 'tracker:create_wanted' %}">Create Wanted Entry</a>
+        </li>
+    </ul>
+{% endblock %}
