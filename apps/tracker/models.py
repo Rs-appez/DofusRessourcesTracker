@@ -30,6 +30,10 @@ class Resource(models.Model):
     def __str__(self):
         return self.name
 
+    def add_stats(self):
+        self.current_value = ResourceValue.get_last_value(self)
+        self.average_value = ResourceValue.get_average_price(self, days=30)
+
 
 class ResourceImage(models.Model):
     name = models.CharField(max_length=255, unique=True, null=True, blank=True)
