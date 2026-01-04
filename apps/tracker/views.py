@@ -3,8 +3,10 @@ from apps.tracker.models import SellOut
 from apps.tracker.models import ResourceValue
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_http_methods
 
 from apps.tracker.models import Resource, ResourceImage, ResourceType
+from .forms import ResourceValueForm
 
 
 def dashboard_view(request):
@@ -92,3 +94,21 @@ def create_wanted_view(request):
         ).use_in.add(card)
 
     return redirect("create_wanted")
+
+
+@require_http_methods(["POST"])
+def add_value_view(request, resource_id):
+    resource = get_object_or_404(Resource, id=resource_id)
+
+    form = ResourceValueForm(request.POST)
+    if not form.is_valid():
+        raise NotImplementedError("Form validation not implemented yet")
+
+    value = form.cleaned_data["value"]
+    ResourceValue.objects.create(resource=resource, value=value)
+
+    resource.add_stats()
+
+    response = render(request, "tracker/partials/card-price.html", {"card": resource})
+    response["HX-Trigger"] = "resourceValueAdded"
+    return response
