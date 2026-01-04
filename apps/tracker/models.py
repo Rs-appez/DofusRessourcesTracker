@@ -1,5 +1,7 @@
 from enum import Enum
 from django.db import models
+from django.utils import timezone
+from datetime import timedelta
 
 
 class ResourceType(Enum):
@@ -45,6 +47,25 @@ class ResourceValue(models.Model):
     def __str__(self):
         return f"{self.resource.name} at {self.timestamp}"
 
+    @staticmethod
+    def get_average_price(resource: Resource, days=7):
+        time_threshold = timezone.now() - timedelta(days=days)
+        values = ResourceValue.objects.filter(
+            resource_id=resource.id, timestamp__gte=time_threshold
+        )
+        if values.exists():
+            return values.aggregate(models.Avg("value"))["value__avg"]
+        return None
+
+    @staticmethod
+    def get_last_value(resource: Resource):
+        return (
+            ResourceValue.objects.filter(resource=resource)
+            .order_by("-timestamp")
+            .values_list("value", flat=True)
+            .first()
+        )
+
 
 class BuyIn(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
@@ -55,6 +76,25 @@ class BuyIn(models.Model):
     def __str__(self):
         return f"BuyIn of {self.quantity} {self.resource.name} at {self.price} on {self.timestamp}"
 
+    @staticmethod
+    def get_average_buy_in_price(resource: Resource, days=7):
+        time_threshold = timezone.now() - timedelta(days=days)
+        buys = BuyIn.objects.filter(
+            resource_id=resource.id, timestamp__gte=time_threshold
+        )
+        if buys.exists():
+            return buys.aggregate(models.Avg("price"))["price__avg"]
+        return None
+
+    @staticmethod
+    def get_last_buy_in_price(resource: Resource):
+        return (
+            BuyIn.objects.filter(resource=resource)
+            .order_by("-timestamp")
+            .values_list("price", flat=True)
+            .first()
+        )
+
 
 class SellOut(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
@@ -64,3 +104,22 @@ class SellOut(models.Model):
 
     def __str__(self):
         return f"SellOut of {self.quantity} {self.resource.name} at {self.price} on {self.timestamp}"
+
+    @staticmethod
+    def get_average_sell_out_price(resource: Resource, days=7):
+        time_threshold = timezone.now() - timedelta(days=days)
+        sells = SellOut.objects.filter(
+            resource_id=resource.id, timestamp__gte=time_threshold
+        )
+        if sells.exists():
+            return sells.aggregate(models.Avg("price"))["price__avg"]
+        return None
+
+    @staticmethod
+    def get_last_sell_out_price(resource: Resource):
+        return (
+            SellOut.objects.filter(resource=resource)
+            .order_by("-timestamp")
+            .values_list("price", flat=True)
+            .first()
+        )
