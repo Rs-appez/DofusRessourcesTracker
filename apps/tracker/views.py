@@ -3,9 +3,16 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 
 
+def dashboard_view(request):
+    return render(request, "tracker/dashboard.html")
+
+def wanted_view(request):
+    wanteds = Resource.objects.filter(resource_type=5)
+    return render(request, "tracker/wanted.html", {"wanteds": wanteds})
+
 def create_wanted_view(request):
     if request.method == "GET":
-        return render(request, "createWanted.html")
+        return render(request, "tracker/createWanted.html")
 
     name = request.POST.get("name")
     wanted_name = request.POST.get("wanted_name")

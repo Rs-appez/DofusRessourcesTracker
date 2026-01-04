@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Wanted</title>
+        <link href="{% static 'tracker/css/wanted.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="wanted-container">
+            {% for wanted in wanteds %}
+                <div class="wanted-entry">
+                    {% if wanted.image %}
+                        <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
+                    {% else %}
+                        <p>No image available.</p>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p>No wanted entries found.</p>
+            {% endfor %}
+        </div>
+    </body>
+</html>

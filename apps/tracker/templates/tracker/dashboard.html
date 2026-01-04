@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Dashboard</title>
+        <link href="{% static 'tracker/css/dashboard.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+        <header>
+            <h1>Dashboard</h1>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="{% url 'tracker:wanted' %}">View Wanted Entry</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'tracker:create_wanted' %}">Create Wanted Entry</a>
+                    </li>
+                </ul>
+            </nav>
+        </body>
+    </html>
