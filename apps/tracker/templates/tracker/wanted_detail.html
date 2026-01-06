@@ -2,9 +2,11 @@
 {% load static %}
 {% block title %}{{ wanted.name }}{% endblock %}
 {% block extra_css %}
-    <link href="{% static 'tracker/css/wanted_detail.css' %}" rel="stylesheet" />
+    <link href="{% static 'tracker/css/wanted-detail.css' %}" rel="stylesheet" />
+    <link href="{% static 'tracker/css/wanted-list.css' %}" rel="stylesheet" />
 {% endblock %}
 {% block content %}
+    {% include 'tracker/partials/wanted-list.html' %}
     <div class="back-link">
         <a href="{% url 'tracker:wanted' %}">Back to Wanted List</a>
     </div>

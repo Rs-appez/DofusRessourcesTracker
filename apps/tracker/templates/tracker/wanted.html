@@ -1,23 +1,9 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 {% load static %}
 {% block title %}Wanted{% endblock %}
 {% block extra_css %}
-    <link href="{% static 'tracker/css/wanted.css' %}" rel="stylesheet" />
+    <link href="{% static 'tracker/css/wanted-list.css' %}" rel="stylesheet" />
 {% endblock %}
 {% block content %}
-    <div class="wanted-container">
-        {% for wanted in wanteds %}
-            <a href="{% url 'tracker:wanted_detail' wanted.id %}">
-                <div class="wanted-entry">
-                    {% if wanted.image %}
-                        <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
-                    {% else %}
-                        <p>No image available.</p>
-                    {% endif %}
-                </div>
-            </a>
-        {% empty %}
-            <p>No wanted entries found.</p>
-        {% endfor %}
-    </div>
+    {% include "tracker/partials/wanted-list.html" %}
 {% endblock %}
