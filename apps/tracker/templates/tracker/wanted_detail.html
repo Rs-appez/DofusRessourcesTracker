@@ -11,13 +11,14 @@
     <div class="wanted-detail-container">
         <h1>{{ wanted.name }}</h1>
         <div class="wanted-info">
-            <div class="wanted-section">
+            <div class="wanted-section open-value-modal"
+                 data-name="{{ wanted.name }}"
+                 data-id="{{ wanted.id }}">
                 <div class="wanted-image">
                     <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
                 </div>
-                <div class="wanted-price">
-                    <h2>Current Price: {{ wanted.current_value }} K</h2>
-                    <h3>Average Price: {{ wanted.average_value }} K</h3>
+                <div class="wanted-price" id="resource-price-{{ wanted.id }}">
+                    {% include 'tracker/partials/resource-price.html'  with resource=wanted %}
                 </div>
                 <div class="wanted-sell">
                     <h2>Last Sell : {{ wanted.last_sell_value }} K</h2>
@@ -35,7 +36,9 @@
                         <div class="card-info">
                             <h3>{{ card.name }}</h3>
                         </div>
-                        {% include 'tracker/partials/card-price.html' %}
+                        <div class="card-price" id="resource-price-{{ card.id }}">
+                            {% include 'tracker/partials/resource-price.html' with resource=card %}
+                        </div>
                     </div>
                 {% empty %}
                     <p>No card available.</p>

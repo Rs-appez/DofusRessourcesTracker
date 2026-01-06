@@ -102,6 +102,8 @@ def add_value_view(request, resource_id):
 
     resource.add_stats()
 
-    response = render(request, "tracker/partials/card-price.html", {"card": resource})
+    response = render(
+        request, "tracker/partials/resource-price.html", {"resource": resource}
+    )
     response["HX-Trigger"] = "resourceValueAdded"
     return response

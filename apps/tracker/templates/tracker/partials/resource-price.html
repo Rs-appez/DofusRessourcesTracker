@@ -1,0 +1,10 @@
+{% if resource is None %}
+    <p>No data available.</p>
+{% else %}
+    {% if resource.current_value is None %}
+        <h4>No data yet</h4>
+    {% else %}
+        <h4>Current Price: {{ resource.current_value }} K</h4>
+        <h5>Average Price: {{ resource.average_value }} K</h5>
+    {% endif %}
+{% endif %}

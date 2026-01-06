@@ -11,7 +11,7 @@ function openModal(event) {
 
     last_id.value = element.dataset.id;
 
-    form.setAttribute("hx-target", `#card-price-${element.dataset.id}`);
+    form.setAttribute("hx-target", `#resource-price-${element.dataset.id}`);
     let post_url = form.getAttribute("hx-post");
     post_url = post_url.replace(/\d+/, element.dataset.id);
     form.setAttribute("hx-post", post_url);
