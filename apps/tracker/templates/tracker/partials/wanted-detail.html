@@ -1,16 +1,7 @@
-{% extends 'layout.html' %}
-{% load static %}
-{% block title %}{{ wanted.name }}{% endblock %}
-{% block extra_css %}
-    <link href="{% static 'tracker/css/wanted-detail.css' %}" rel="stylesheet" />
-    <link href="{% static 'tracker/css/wanted-list.css' %}" rel="stylesheet" />
-{% endblock %}
-{% block content %}
-    {% include 'tracker/partials/wanted-list.html' %}
-    <div class="back-link">
-        <a href="{% url 'tracker:wanted' %}">Back to Wanted List</a>
-    </div>
-    <div class="wanted-detail-container">
+<div class="wanted-detail-container" id="wanted-detail-container">
+    {% if not wanted or not cards %}
+        <p>Wanted item not found.</p>
+    {% else %}
         <h1>{{ wanted.name }}</h1>
         <div class="wanted-info">
             <div class="wanted-section open-value-modal"
@@ -47,6 +38,6 @@
                 {% endfor %}
             </div>
         </div>
-    </div>
-    {% include 'tracker/partials/value_modal.html' %}
-{% endblock %}
+        {% include 'tracker/partials/value-modal.html' %}
+    {% endif %}
+</div>

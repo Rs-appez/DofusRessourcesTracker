@@ -1,15 +1,17 @@
-{% load static %}
 <div class="wanted-container">
     {% for wanted in wanteds %}
-        <a href="{% url 'tracker:wanted_detail' wanted.id %}">
-            <div class="wanted-entry">
-                {% if wanted.image %}
-                    <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
-                {% else %}
-                    <p>No image available.</p>
-                {% endif %}
-            </div>
-        </a>
+        <div class="wanted-entry"
+             hx-post="{% url 'tracker:wanted_detail' wanted.id %}"
+             hx-trigger="click"
+             hx-target="#wanted-detail-container"
+             hx-swap="innerHTML">
+            {% csrf_token %}
+            {% if wanted.image %}
+                <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
+            {% else %}
+                <p>No image available.</p>
+            {% endif %}
+        </div>
     {% empty %}
         <p>No wanted entries found.</p>
     {% endfor %}

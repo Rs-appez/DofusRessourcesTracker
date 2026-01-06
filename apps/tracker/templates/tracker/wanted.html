@@ -1,9 +1,15 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
 {% load static %}
-{% block title %}Wanted{% endblock %}
+{% block title %}{{ wanted.name }}{% endblock %}
 {% block extra_css %}
+    <link href="{% static 'tracker/css/wanted-detail.css' %}" rel="stylesheet" />
     <link href="{% static 'tracker/css/wanted-list.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'tracker/css/modal.css' %}" />
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static 'tracker/js/value-modal.js' %}" defer></script>
 {% endblock %}
 {% block content %}
-    {% include "tracker/partials/wanted-list.html" %}
+    {% include 'tracker/partials/wanted-list.html' %}
+    {% include 'tracker/partials/wanted-detail.html' %}
 {% endblock %}

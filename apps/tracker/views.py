@@ -17,9 +17,9 @@ def wanted_view(request):
     return render(request, "tracker/wanted.html", {"wanteds": wanteds})
 
 
+@require_http_methods(["POST"])
 def wanted_detail_view(request, wanted_id):
-    wanteds = Resource.objects.filter(resource_type=ResourceType.WANTED.value)
-    wanted = get_object_or_404(wanteds, id=wanted_id)
+    wanted = get_object_or_404(Resource, id=wanted_id)
     if wanted.resource_type != ResourceType.WANTED.value:
         raise Http404("Wanted not found")
 
@@ -44,15 +44,16 @@ def wanted_detail_view(request, wanted_id):
     context = {
         "form": form,
         "wanted": wanted,
-        "wanteds": wanteds,
         "cards": cards,
     }
 
-    return render(
+    response = render(
         request,
-        "tracker/wanted_detail.html",
+        "tracker/partials/wanted-detail.html",
         context,
     )
+    response["HX-Trigger"] = "wantedDetailLoaded"
+    return response
 
 
 def create_wanted_view(request):
