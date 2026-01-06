@@ -176,6 +176,11 @@
   padding: 2rem;
   font-size: 1rem;
 }
+
+.open-value-modal {
+  cursor: pointer;
+}
+
 .back-link {
   margin-bottom: 1.5rem;
   position: absolute;
