@@ -15,7 +15,7 @@
                 </div>
                 <div class="wanted-sell">
                     <h2>Last Sell : {{ wanted.last_sell_value }} K</h2>
-                    <h3>Average Sell : {{ wanted.average_sell_values }} K</h3>
+                    <h3>Average Sell : {{ wanted.average_sell_values | floatformat:2 }} K</h3>
                 </div>
                 <div class="card-price">
                     <h2>Cards Prices :</h2>

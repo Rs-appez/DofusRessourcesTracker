@@ -5,6 +5,6 @@
         <h4>No data yet</h4>
     {% else %}
         <h4>Current Price: {{ resource.current_value }} K</h4>
-        <h5>Average Price: {{ resource.average_value }} K</h5>
+        <h5>Average Price: {{ resource.average_value | floatformat:2 }} K</h5>
     {% endif %}
 {% endif %}
