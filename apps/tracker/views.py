@@ -93,7 +93,7 @@ def create_wanted_view(request):
             resource_type=ResourceType.CARD.value,
         ).use_in.add(card)
 
-    return redirect("create_wanted")
+    return redirect("tracker:create_wanted")
 
 
 @require_http_methods(["POST"])
