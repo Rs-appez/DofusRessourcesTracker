@@ -162,3 +162,15 @@
   background: var(--primary-color-hover);
   box-shadow: var(--box-shadow-hover);
 }
+
+.wanted-btn button:disabled {
+  background: var(--button-color-disabled);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.wanted-btn span {
+  margin-left: 1rem;
+  font-size: 1rem;
+  color: var(--font-color-success);
+}
