@@ -4,14 +4,15 @@
     {% else %}
         <h1>{{ wanted.name }}</h1>
         <div class="wanted-info">
-            <div class="wanted-section open-value-modal"
-                 data-name="{{ wanted.name }}"
-                 data-id="{{ wanted.id }}">
+            <div class="wanted-section">
                 <div class="wanted-image">
                     <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
                 </div>
                 <div class="wanted-price-info">
-                    <div id="resource-price-{{ wanted.id }}">
+                    <div id="resource-price-{{ wanted.id }}"
+                         class="open-value-modal"
+                         data-name="{{ wanted.name }}"
+                         data-id="{{ wanted.id }}">
                         {% include 'tracker/partials/resource-price.html'  with resource=wanted %}
                     </div>
                     <div>
@@ -21,6 +22,14 @@
                     <div>
                         <h2>Cards Prices :</h2>
                         <h3>{{ wanted.all_card_price }} K</h3>
+                    </div>
+                </div>
+                <div class="wanted-btn">
+                    <div>
+                        <button id="buy-all-cards-btn"
+                                hx-post="{% url 'tracker:buy_all_cards' wanted.id %}"
+                                hx-target="#buy-all-result">Buy all cards</button>
+                        <span id="buy-all-result"></span>
                     </div>
                 </div>
             </div>
