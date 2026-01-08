@@ -142,3 +142,23 @@
 .open-value-modal {
   cursor: pointer;
 }
+
+.wanted-btn button {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+  box-shadow: var(--box-shadow);
+}
+
+.wanted-btn button:hover {
+  background: var(--primary-color-hover);
+  box-shadow: var(--box-shadow-hover);
+}
