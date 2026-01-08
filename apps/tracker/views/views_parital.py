@@ -2,9 +2,9 @@ from django.http.response import Http404
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_http_methods
 
-from .models import ResourceValue, SellOut, Resource, ResourceType
+from apps.tracker.models import ResourceValue, SellOut, Resource, ResourceType
 
-from .forms import ResourceValueForm
+from apps.tracker.forms import ResourceValueForm
 
 
 @require_http_methods(["POST"])

@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 
 
-from .models import Resource, ResourceImage, ResourceType
+from apps.tracker.models import Resource, ResourceImage, ResourceType
 
 
 def dashboard_view(request):
