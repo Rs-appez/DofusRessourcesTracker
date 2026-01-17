@@ -40,9 +40,11 @@ function closeModal() {
 refreshElements();
 
 document.body.addEventListener("resourceValueAdded", function() {
+    const url = document.getElementById("wanted-info").dataset.allCardsUrl;
+    htmx.ajax("POST", url, { target: "#all-card-price" });
+
     dialog.close();
     form.reset();
-    htmx.ajax("POST", cardPriceUrl, { target: "#all-card-price" });
 });
 
 document.body.addEventListener("htmx:afterSwap", function(event) {

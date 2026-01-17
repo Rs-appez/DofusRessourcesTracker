@@ -3,7 +3,7 @@
         <p>Wanted item not found.</p>
     {% else %}
         <h1>{{ wanted.name }}</h1>
-        <div class="wanted-info">
+    <div class="wanted-info" id="wanted-info" data-wanted-id="{{ wanted.id }}" data-all-cards-url="{% url 'tracker:all_price_cards' wanted.id %}">
             <div class="wanted-section">
                 <div class="wanted-image">
                     <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
