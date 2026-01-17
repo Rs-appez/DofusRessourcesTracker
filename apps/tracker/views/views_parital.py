@@ -68,3 +68,34 @@ def add_value_view(request, resource_id):
     )
     response["HX-Trigger"] = "resourceValueAdded"
     return response
+
+
+@require_http_methods(["POST"])
+def get_all_price_card_view(request, wanted_id):
+    wanted = get_object_or_404(Resource, id=wanted_id)
+    if wanted.resource_type != ResourceType.WANTED.value:
+        raise Http404("Wanted not found")
+
+    card = Resource.objects.filter(
+        use_in=wanted, resource_type=ResourceType.CARD.value
+    ).first()
+
+    fragments = Resource.objects.filter(
+        use_in=card, resource_type=ResourceType.CARD.value
+    ).order_by("name")
+
+    cards = list(fragments) + [card]
+
+    for card in cards:
+        card.add_stats()
+
+    wanted.all_card_price = sum(
+        [card.current_value for card in cards[:-1] if card.current_value]
+    )
+
+    response = render(
+        request,
+        "tracker/partials/all-card-price.html",
+        {"wanted": wanted},
+    )
+    return response
