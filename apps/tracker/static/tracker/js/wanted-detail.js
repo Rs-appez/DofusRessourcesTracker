@@ -13,7 +13,6 @@ function onRequest(event) {
 }
 
 function onResponse(event) {
-    console.log("event : ", event);
     if (["buy-all-cards-btn"].includes(event.detail.requestConfig.elt.id)) {
         enableButton(event.detail.requestConfig.elt);
     }
