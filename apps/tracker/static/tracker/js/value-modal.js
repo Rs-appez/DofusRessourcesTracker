@@ -42,6 +42,7 @@ refreshElements();
 document.body.addEventListener("resourceValueAdded", function() {
     dialog.close();
     form.reset();
+    htmx.ajax("POST", cardPriceUrl, { target: "#all-card-price" });
 });
 
 document.body.addEventListener("htmx:afterSwap", function(event) {
