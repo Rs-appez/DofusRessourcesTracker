@@ -19,9 +19,8 @@
                         <h2>Last Sell : {{ wanted.last_sell_value }} K</h2>
                         <h3>Average Sell : {{ wanted.average_sell_values | floatformat:2 }} K</h3>
                     </div>
-                    <div>
-                        <h2>Cards Prices :</h2>
-                        <h3>{{ wanted.all_card_price }} K</h3>
+                <div id="all-card-price">
+                        {% include 'tracker/partials/all-card-price.html' %}
                     </div>
                 </div>
                 <div class="wanted-btn">
