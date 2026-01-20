@@ -34,4 +34,5 @@ body {
 
 .cart-svg {
   fill: var(--font-color);
+  cursor: pointer;
 }
