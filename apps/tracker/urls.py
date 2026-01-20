@@ -12,6 +12,7 @@ urlpatterns = [
     path(
         "api/buy-all/<wanted_id>/", views_api.buy_all_cards_view, name="buy_all_cards"
     ),
+    path("api/buy-card/<resource_id>/", views_api.buy_card_view, name="buy_card"),
     # Partial views (htmx)
     path(
         "wanted/<int:wanted_id>/",

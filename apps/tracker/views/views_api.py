@@ -34,3 +34,27 @@ def buy_all_cards_view(request, wanted_id):
     )
 
     return HttpResponse("Buy all cards executed", status=200)
+
+
+@require_http_methods(["POST"])
+def buy_card_view(request, resource_id):
+    latest_value = (
+        ResourceValue.objects.filter(resource=OuterRef("pk"))
+        .order_by("-timestamp")
+        .values("value")[:1]
+    )
+
+    try:
+        fragment = Resource.objects.annotate(latest_value=Subquery(latest_value)).get(
+            id=resource_id, resource_type=ResourceType.CARD.value
+        )
+    except Resource.DoesNotExist:
+        return HttpResponse("Fragment not found", status=404)
+
+    BuyIn.objects.create(
+        resource=fragment,
+        price=fragment.latest_value if fragment.latest_value else 0,
+        quantity=1,
+    )
+
+    return HttpResponse("Buy card executed", status=200)
