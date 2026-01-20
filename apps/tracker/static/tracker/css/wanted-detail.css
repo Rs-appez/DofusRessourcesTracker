@@ -115,20 +115,18 @@
   margin: 0.25rem 0 0 0;
 }
 
-.card-buy {
-  padding: 1rem;
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.card-buy h3 {
-  font-size: 0.95rem;
-  color: var(--font-color);
-  margin: 0.5rem 0 0 0;
+.card-icon {
+  margin-right: 0.7rem;
 }
-
-.card-buy h4 {
-  font-size: 0.85rem;
-  color: var(--font-color-secondary);
-  margin: 0.25rem 0 0 0;
+.card-icon svg {
+  width: 24px;
+  height: 24px;
 }
 
 .cards-section p {
