@@ -46,7 +46,9 @@
                             <div class="card-price open-value-modal" id="resource-price-{{ card.id }}">
                                 {% include 'tracker/partials/resource-price.html' with resource=card %}
                             </div>
-                            <div class="card-icon">
+                            <div class="card-icon"
+                                 hx-post="{% url 'tracker:buy_card' card.id %}"
+                                 hx-swap="none">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 640 640"
                                      class="cart-svg">
