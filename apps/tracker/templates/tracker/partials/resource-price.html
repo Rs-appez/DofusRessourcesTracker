@@ -4,7 +4,7 @@
     {% if resource.current_value is None %}
         <h4>No data yet</h4>
     {% else %}
-        <h4>Current Price: {{ resource.current_value }} K</h4>
-        <h5>Median Price: {{ resource.average_value | floatformat:2 }} K</h5>
+        <h4>Current Price: {{ resource.current_value_formatted }} K</h4>
+        <h5>Median Price: {{ resource.average_value_formatted }} K</h5>
     {% endif %}
 {% endif %}

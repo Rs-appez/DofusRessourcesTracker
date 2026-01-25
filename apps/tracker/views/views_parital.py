@@ -1,10 +1,10 @@
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404, render
+from django.utils.formats import number_format
 from django.views.decorators.http import require_POST
 
-from apps.tracker.models import ResourceValue, SellOut, Resource, ResourceType
-
 from apps.tracker.forms import ResourceValueForm
+from apps.tracker.models import Resource, ResourceType, ResourceValue, SellOut
 
 
 @require_POST
@@ -14,8 +14,6 @@ def wanted_detail_view(request, wanted_id):
         raise Http404("Wanted not found")
 
     wanted.add_stats()
-    wanted.last_sell_value = SellOut.get_last_price(wanted)
-    wanted.average_sell_values = SellOut.get_average_price(wanted, days=30)
 
     card = Resource.objects.filter(
         use_in=wanted, resource_type=ResourceType.CARD.value
@@ -32,6 +30,12 @@ def wanted_detail_view(request, wanted_id):
 
     wanted.all_card_price = sum(
         [card.current_value for card in cards[:-1] if card.current_value]
+    )
+
+    wanted.all_card_price_formatted = (
+        number_format(wanted.all_card_price, force_grouping=True)
+        if wanted.all_card_price
+        else "N/A"
     )
 
     form = ResourceValueForm()

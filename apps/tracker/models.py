@@ -4,6 +4,7 @@ from enum import Enum
 from django.db import models
 from django.db.models.functions import TruncDate
 from django.utils import timezone
+from django.utils.formats import number_format
 
 
 class ResourceType(Enum):
@@ -34,7 +35,25 @@ class Resource(models.Model):
 
     def add_stats(self):
         self.current_value = ResourceValue.get_last_price(self)
+        self.current_value_formatted = number_format(
+            self.current_value, decimal_pos=0, force_grouping=True
+        )
+
         self.average_value = ResourceValue.get_average_price(self, days=30)
+        self.average_value_formatted = number_format(
+            self.average_value, decimal_pos=2, force_grouping=True
+        )
+
+        if self.resource_type == ResourceType.WANTED.value:
+            self.last_sell_value = SellOut.get_last_price(self)
+            self.last_sell_value_formatted = number_format(
+                self.last_sell_value, decimal_pos=0, force_grouping=True
+            )
+
+            self.average_sell_values = SellOut.get_average_price(self, days=30)
+            self.average_sell_values_formatted = number_format(
+                self.average_sell_values, decimal_pos=2, force_grouping=True
+            )
 
 
 class ResourceImage(models.Model):
@@ -79,9 +98,7 @@ class ResourceValue(models.Model, TransactionMixin):
         time_threshold = timezone.now() - timedelta(days=days)
 
         daily_averages = (
-            cls.objects.filter(
-                resource_id=resource.id, timestamp__gte=time_threshold
-            )
+            cls.objects.filter(resource_id=resource.id, timestamp__gte=time_threshold)
             .annotate(day=TruncDate("timestamp"))
             .values("day")
             .annotate(avg_per_day=models.Avg("price"))
