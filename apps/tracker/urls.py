@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.i18n import set_language
 from .views import views, views_parital, views_api
 
 app_name = "tracker"
@@ -9,6 +10,7 @@ urlpatterns = [
     path("create-wanted/", views.create_wanted_view, name="create_wanted"),
     path("wanted/", views.wanted_view, name="wanted"),
     # API views
+    path("api/set-lang/", set_language, name="set_language"),
     path(
         "api/buy-all/<wanted_id>/", views_api.buy_all_cards_view, name="buy_all_cards"
     ),
