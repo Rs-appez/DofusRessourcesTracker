@@ -74,12 +74,12 @@ class ResourceValue(models.Model, TransactionMixin):
     def __str__(self):
         return f"{self.resource.name} at {self.timestamp}"
 
-    @staticmethod
-    def get_average_price(resource: Resource, days=7) -> float | None:
+    @classmethod
+    def get_average_price(cls, resource: Resource, days=7) -> float | None:
         time_threshold = timezone.now() - timedelta(days=days)
 
         daily_averages = (
-            ResourceValue.objects.filter(
+            cls.objects.filter(
                 resource_id=resource.id, timestamp__gte=time_threshold
             )
             .annotate(day=TruncDate("timestamp"))
