@@ -11,7 +11,7 @@ def buy_all_cards_view(request, wanted_id):
     latest_value = (
         ResourceValue.objects.filter(resource=OuterRef("pk"))
         .order_by("-timestamp")
-        .values("value")[:1]
+        .values("price")[:1]
     )
 
     fragments = Resource.objects.filter(
@@ -41,7 +41,7 @@ def buy_card_view(request, resource_id):
     latest_value = (
         ResourceValue.objects.filter(resource=OuterRef("pk"))
         .order_by("-timestamp")
-        .values("value")[:1]
+        .values("price")[:1]
     )
 
     try:

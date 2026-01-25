@@ -62,7 +62,7 @@ def add_value_view(request, resource_id):
     if not form.is_valid():
         raise NotImplementedError("Form validation not implemented yet")
 
-    value = form.cleaned_data["value"]
+    value = form.cleaned_data["price"]
     ResourceValue.objects.create(resource=resource, price=value)
 
     resource.add_stats()
