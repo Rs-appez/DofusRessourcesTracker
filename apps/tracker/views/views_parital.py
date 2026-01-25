@@ -1,13 +1,13 @@
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404, render
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_POST
 
 from apps.tracker.models import ResourceValue, SellOut, Resource, ResourceType
 
 from apps.tracker.forms import ResourceValueForm
 
 
-@require_http_methods(["POST"])
+@require_POST
 def wanted_detail_view(request, wanted_id):
     wanted = get_object_or_404(Resource, id=wanted_id)
     if wanted.resource_type != ResourceType.WANTED.value:
@@ -50,7 +50,7 @@ def wanted_detail_view(request, wanted_id):
     return response
 
 
-@require_http_methods(["POST"])
+@require_POST
 def add_value_view(request, resource_id):
     resource = get_object_or_404(Resource, id=resource_id)
 
@@ -70,7 +70,7 @@ def add_value_view(request, resource_id):
     return response
 
 
-@require_http_methods(["POST"])
+@require_POST
 def get_all_price_card_view(request, wanted_id):
     wanted = get_object_or_404(Resource, id=wanted_id)
     if wanted.resource_type != ResourceType.WANTED.value:

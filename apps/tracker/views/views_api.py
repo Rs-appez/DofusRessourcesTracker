@@ -1,12 +1,12 @@
 from django.http.response import HttpResponse
 from django.db.models.expressions import Subquery
 from django.db.models.expressions import OuterRef
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_POST
 
 from apps.tracker.models import BuyIn, Resource, ResourceType, ResourceValue
 
 
-@require_http_methods(["POST"])
+@require_POST
 def buy_all_cards_view(request, wanted_id):
     latest_value = (
         ResourceValue.objects.filter(resource=OuterRef("pk"))
@@ -36,7 +36,7 @@ def buy_all_cards_view(request, wanted_id):
     return HttpResponse("Buy all cards executed", status=200)
 
 
-@require_http_methods(["POST"])
+@require_POST
 def buy_card_view(request, resource_id):
     latest_value = (
         ResourceValue.objects.filter(resource=OuterRef("pk"))
