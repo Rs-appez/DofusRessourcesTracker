@@ -47,7 +47,7 @@ class ResourceImage(models.Model):
 
 class ResourceValue(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
-    value = models.SmallIntegerField()
+    price = models.SmallIntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -62,7 +62,7 @@ class ResourceValue(models.Model):
             )
             .annotate(day=TruncDate("timestamp"))
             .values("day")
-            .annotate(avg_per_day=models.Avg("value"))
+            .annotate(avg_per_day=models.Avg("price"))
         )
         if daily_averages.exists():
             avgs = [
