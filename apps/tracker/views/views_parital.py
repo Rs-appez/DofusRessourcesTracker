@@ -97,6 +97,12 @@ def get_all_price_card_view(request, wanted_id):
         [card.current_value for card in cards[:-1] if card.current_value]
     )
 
+    wanted.all_card_price_formatted = (
+        number_format(wanted.all_card_price, force_grouping=True)
+        if wanted.all_card_price
+        else "N/A"
+    )
+
     response = render(
         request,
         "tracker/partials/all-card-price.html",
