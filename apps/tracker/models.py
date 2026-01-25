@@ -33,7 +33,7 @@ class Resource(models.Model):
         return self.name
 
     def add_stats(self):
-        self.current_value = ResourceValue.get_last_value(self)
+        self.current_value = ResourceValue.get_last_price(self)
         self.average_value = ResourceValue.get_average_price(self, days=30)
 
 
@@ -45,7 +45,28 @@ class ResourceImage(models.Model):
         return self.name if self.name else f"Image {self.id}"
 
 
-class ResourceValue(models.Model):
+class TransactionMixin:
+    @classmethod
+    def get_average_price(cls, resource: Resource, days=7):
+        time_threshold = timezone.now() - timedelta(days=days)
+        transactions = cls.objects.filter(
+            resource_id=resource.id, timestamp__gte=time_threshold
+        )
+        if transactions.exists():
+            return transactions.aggregate(models.Avg("price"))["price__avg"]
+        return None
+
+    @classmethod
+    def get_last_price(cls, resource: Resource):
+        return (
+            cls.objects.filter(resource=resource)
+            .order_by("-timestamp")
+            .values_list("price", flat=True)
+            .first()
+        )
+
+
+class ResourceValue(models.Model, TransactionMixin):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     price = models.SmallIntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -56,6 +77,7 @@ class ResourceValue(models.Model):
     @staticmethod
     def get_average_price(resource: Resource, days=7) -> float | None:
         time_threshold = timezone.now() - timedelta(days=days)
+
         daily_averages = (
             ResourceValue.objects.filter(
                 resource_id=resource.id, timestamp__gte=time_threshold
@@ -77,17 +99,8 @@ class ResourceValue(models.Model):
             )
         return None
 
-    @staticmethod
-    def get_last_value(resource: Resource):
-        return (
-            ResourceValue.objects.filter(resource=resource)
-            .order_by("-timestamp")
-            .values_list("value", flat=True)
-            .first()
-        )
 
-
-class BuyIn(models.Model):
+class BuyIn(models.Model, TransactionMixin):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     price = models.SmallIntegerField()
     quantity = models.SmallIntegerField()
@@ -96,27 +109,18 @@ class BuyIn(models.Model):
     def __str__(self):
         return f"BuyIn of {self.quantity} {self.resource.name} at {self.price} on {self.timestamp}"
 
-    @staticmethod
-    def get_average_buy_in_price(resource: Resource, days=7):
-        time_threshold = timezone.now() - timedelta(days=days)
-        buys = BuyIn.objects.filter(
-            resource_id=resource.id, timestamp__gte=time_threshold
-        )
-        if buys.exists():
-            return buys.aggregate(models.Avg("price"))["price__avg"]
-        return None
 
-    @staticmethod
-    def get_last_buy_in_price(resource: Resource):
-        return (
-            BuyIn.objects.filter(resource=resource)
-            .order_by("-timestamp")
-            .values_list("price", flat=True)
-            .first()
-        )
+def get_average_price(resource: Resource, days=7):
+    time_threshold = timezone.now() - timedelta(days=days)
+    sells = SellOut.objects.filter(
+        resource_id=resource.id, timestamp__gte=time_threshold
+    )
+    if sells.exists():
+        return sells.aggregate(models.Avg("price"))["price__avg"]
+    return None
 
 
-class SellOut(models.Model):
+class SellOut(models.Model, TransactionMixin):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     price = models.SmallIntegerField()
     quantity = models.SmallIntegerField()
@@ -124,22 +128,3 @@ class SellOut(models.Model):
 
     def __str__(self):
         return f"SellOut of {self.quantity} {self.resource.name} at {self.price} on {self.timestamp}"
-
-    @staticmethod
-    def get_average_sell_out_price(resource: Resource, days=7):
-        time_threshold = timezone.now() - timedelta(days=days)
-        sells = SellOut.objects.filter(
-            resource_id=resource.id, timestamp__gte=time_threshold
-        )
-        if sells.exists():
-            return sells.aggregate(models.Avg("price"))["price__avg"]
-        return None
-
-    @staticmethod
-    def get_last_sell_out_price(resource: Resource):
-        return (
-            SellOut.objects.filter(resource=resource)
-            .order_by("-timestamp")
-            .values_list("price", flat=True)
-            .first()
-        )

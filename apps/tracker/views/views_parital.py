@@ -14,8 +14,8 @@ def wanted_detail_view(request, wanted_id):
         raise Http404("Wanted not found")
 
     wanted.add_stats()
-    wanted.last_sell_value = SellOut.get_last_sell_out_price(wanted)
-    wanted.average_sell_values = SellOut.get_average_sell_out_price(wanted, days=30)
+    wanted.last_sell_value = SellOut.get_last_price(wanted)
+    wanted.average_sell_values = SellOut.get_average_price(wanted, days=30)
 
     card = Resource.objects.filter(
         use_in=wanted, resource_type=ResourceType.CARD.value
