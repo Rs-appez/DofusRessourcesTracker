@@ -1,7 +1,9 @@
-from enum import Enum
-from django.db import models
-from django.utils import timezone
 from datetime import timedelta
+from enum import Enum
+
+from django.db import models
+from django.db.models.functions import TruncDate
+from django.utils import timezone
 
 
 class ResourceType(Enum):
@@ -52,13 +54,27 @@ class ResourceValue(models.Model):
         return f"{self.resource.name} at {self.timestamp}"
 
     @staticmethod
-    def get_average_price(resource: Resource, days=7):
+    def get_average_price(resource: Resource, days=7) -> float | None:
         time_threshold = timezone.now() - timedelta(days=days)
-        values = ResourceValue.objects.filter(
-            resource_id=resource.id, timestamp__gte=time_threshold
+        daily_averages = (
+            ResourceValue.objects.filter(
+                resource_id=resource.id, timestamp__gte=time_threshold
+            )
+            .annotate(day=TruncDate("timestamp"))
+            .values("day")
+            .annotate(avg_per_day=models.Avg("value"))
         )
-        if values.exists():
-            return values.aggregate(models.Avg("value"))["value__avg"]
+        if daily_averages.exists():
+            avgs = [
+                d["avg_per_day"] for d in daily_averages if d["avg_per_day"] is not None
+            ]
+            sorted_avgs = sorted(avgs)
+            n = len(sorted_avgs)
+            return (
+                (sorted_avgs[n // 2])
+                if n % 2 == 1
+                else (sorted_avgs[n // 2 - 1] + sorted_avgs[n // 2]) / 2
+            )
         return None
 
     @staticmethod
