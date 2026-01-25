@@ -33,7 +33,7 @@ def create_wanted_view(request):
         name=name, image=ress_img, resource_type=ResourceType.WANTED.value
     )
     card = Resource.objects.create(
-        name=f"Carte de {wanted_name}",
+        name=f"Carte {wanted_name}",
         image=card_img,
         resource_type=ResourceType.CARD.value,
     )
