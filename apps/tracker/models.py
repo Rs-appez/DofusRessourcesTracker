@@ -127,16 +127,6 @@ class BuyIn(models.Model, TransactionMixin):
         return f"BuyIn of {self.quantity} {self.resource.name} at {self.price} on {self.timestamp}"
 
 
-def get_average_price(resource: Resource, days=7):
-    time_threshold = timezone.now() - timedelta(days=days)
-    sells = SellOut.objects.filter(
-        resource_id=resource.id, timestamp__gte=time_threshold
-    )
-    if sells.exists():
-        return sells.aggregate(models.Avg("price"))["price__avg"]
-    return None
-
-
 class SellOut(models.Model, TransactionMixin):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     price = models.SmallIntegerField()
