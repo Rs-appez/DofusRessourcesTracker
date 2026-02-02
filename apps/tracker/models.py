@@ -87,7 +87,7 @@ class TransactionMixin:
 
 class ResourceValue(models.Model, TransactionMixin):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
-    price = models.SmallIntegerField()
+    price = models.SmallIntegerField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -98,7 +98,11 @@ class ResourceValue(models.Model, TransactionMixin):
         time_threshold = timezone.now() - timedelta(days=days)
 
         daily_averages = (
-            cls.objects.filter(resource_id=resource.id, timestamp__gte=time_threshold)
+            cls.objects.filter(
+                resource_id=resource.id,
+                timestamp__gte=time_threshold,
+                price__isnull=False,
+            )
             .annotate(day=TruncDate("timestamp"))
             .values("day")
             .annotate(avg_per_day=models.Avg("price"))
