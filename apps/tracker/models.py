@@ -39,9 +39,20 @@ class Resource(models.Model):
             self.current_value, decimal_pos=0, force_grouping=True
         )
 
-        self.average_value = ResourceValue.get_average_price(self, days=30)
+        self.average_value, month_values = ResourceValue.get_average_price(
+            self, days=30
+        )
         self.average_value_formatted = number_format(
             self.average_value, decimal_pos=2, force_grouping=True
+        )
+
+        data = [
+            (value["avg_per_day"], value["day"].strftime("%d-%m"))
+            for value in month_values
+        ]
+
+        self.days_values, self.days_labels = (
+            (list(x) for x in zip(*data)) if data else ([], [])
         )
 
         if self.resource_type == ResourceType.WANTED.value:
@@ -94,7 +105,9 @@ class ResourceValue(models.Model, TransactionMixin):
         return f"{self.resource.name} at {self.timestamp}"
 
     @classmethod
-    def get_average_price(cls, resource: Resource, days=7) -> float | None:
+    def get_average_price(
+        cls, resource: Resource, days=7
+    ) -> tuple[float, list[dict[str, timezone.datetime]]] | None:
         time_threshold = timezone.now() - timedelta(days=days)
 
         daily_averages = (
@@ -117,7 +130,7 @@ class ResourceValue(models.Model, TransactionMixin):
                 (sorted_avgs[n // 2])
                 if n % 2 == 1
                 else (sorted_avgs[n // 2 - 1] + sorted_avgs[n // 2]) / 2
-            )
+            ), daily_averages
         return None
 
 
