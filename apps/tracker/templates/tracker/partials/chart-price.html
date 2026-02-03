@@ -1,9 +1,10 @@
 <canvas id="priceChart-{{ id }}"></canvas>
 <script>
-    var ctx = document.getElementById("priceChart-{{ id }}").getContext("2d");
+    function initChart() {
 
-    var labels = {{labels| safe }};
-    var data = {{data| safe }};
+        let ctx = document.getElementById("priceChart-{{ id }}").getContext("2d");
+        let labels = {{labels| safe }};
+        let data = {{data| safe }};
 
     new Chart(ctx, {
         type: "line",
@@ -32,4 +33,6 @@
             },
         },
     });
+  };
+    initChart();
 </script>
