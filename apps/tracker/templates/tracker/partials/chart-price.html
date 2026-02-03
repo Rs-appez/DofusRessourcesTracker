@@ -1,0 +1,35 @@
+<canvas id="priceChart-{{ id }}"></canvas>
+<script>
+    var ctx = document.getElementById("priceChart-{{ id }}").getContext("2d");
+
+    var labels = {{labels| safe }};
+    var data = {{data| safe }};
+
+    new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Price",
+                    data: data,
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    tension: 0.1,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                title: {
+                    display: false,
+                },
+            },
+        },
+    });
+</script>

@@ -8,28 +8,35 @@
              data-wanted-id="{{ wanted.id }}"
              data-all-cards-url="{% url 'tracker:all_price_cards' wanted.id %}">
             <div class="wanted-section">
-                <div class="wanted-image">
-                    <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
-                </div>
-                <div class="wanted-price-info">
-                    <div id="resource-price-{{ wanted.id }}"
-                         class="open-value-modal"
-                         data-name="{{ wanted.name }}"
-                         data-id="{{ wanted.id }}">
-                        {% include 'tracker/partials/resource-price.html'  with resource=wanted %}
+                <div class="wanted-header">
+                    <div class="wanted-image">
+                        <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
                     </div>
-                    <div>
-                        <h2>Last Sell : {{ wanted.last_sell_value_formatted }} K</h2>
-                        <h3>Average Sell : {{ wanted.average_sell_values_formatted }} K</h3>
+                    <div class="chart-container">
+                        {% include 'tracker/partials/chart-price.html' with id=wanted.id data=wanted.days_values labels=wanted.days_labels %}
                     </div>
-                    <div id="all-card-price">{% include 'tracker/partials/all-card-price.html' %}</div>
                 </div>
-                <div class="wanted-btn">
-                    <div>
-                        <button id="buy-all-cards-btn"
-                                hx-post="{% url 'tracker:buy_all_cards' wanted.id %}"
-                                hx-target="#buy-all-result">Buy all cards</button>
-                        <span id="buy-all-result"></span>
+                <div class="wanted-data">
+                    <div class="wanted-price-info">
+                        <div id="resource-price-{{ wanted.id }}"
+                             class="open-value-modal"
+                             data-name="{{ wanted.name }}"
+                             data-id="{{ wanted.id }}">
+                            {% include 'tracker/partials/resource-price.html'  with resource=wanted %}
+                        </div>
+                        <div>
+                            <h2>Last Sell : {{ wanted.last_sell_value_formatted }} K</h2>
+                            <h3>Average Sell : {{ wanted.average_sell_values_formatted }} K</h3>
+                        </div>
+                        <div id="all-card-price">{% include 'tracker/partials/all-card-price.html' %}</div>
+                    </div>
+                    <div class="wanted-btn">
+                        <div>
+                            <button id="buy-all-cards-btn"
+                                    hx-post="{% url 'tracker:buy_all_cards' wanted.id %}"
+                                    hx-target="#buy-all-result">Buy all cards</button>
+                            <span id="buy-all-result"></span>
+                        </div>
                     </div>
                 </div>
             </div>

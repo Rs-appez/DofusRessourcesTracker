@@ -18,11 +18,23 @@
 
 .wanted-section {
   display: flex;
+  flex-direction: column;
   background: white;
   border-radius: 12px;
   padding: 1rem;
   box-shadow: var(--box-shadow);
   transition: box-shadow 0.3s ease;
+}
+
+.wanted-header {
+  display: flex;
+}
+
+.wanted-data {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1.5rem;
+  flex-grow: 1;
 }
 
 .wanted-price-info {
@@ -171,4 +183,8 @@
   margin-left: 1rem;
   font-size: 1rem;
   color: var(--font-color-success);
+}
+
+.chart-container {
+  flex: 7;
 }
