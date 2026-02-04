@@ -63,6 +63,10 @@ class Resource(models.Model):
                 self.average_sell_values, decimal_pos=2, force_grouping=True
             )
 
+            self.cards_price = ResourceValue.get_all_cards_price_per_day(
+                self, days=list(month_values.keys())
+            )
+
 
 class ResourceImage(models.Model):
     name = models.CharField(max_length=255, unique=True, null=True, blank=True)
@@ -137,6 +141,47 @@ class ResourceValue(models.Model, TransactionMixin):
                 else (sorted_avgs[n // 2 - 1] + sorted_avgs[n // 2]) / 2
             ), results
         return None, results
+
+    @classmethod
+    def get_all_cards_price_per_day(
+        cls, resource: Resource, days: list[timezone.datetime]
+    ):
+        if resource.resource_type != ResourceType.WANTED.value:
+            return None
+
+        card_resources = Resource.objects.filter(
+            use_in__use_in=resource, resource_type=ResourceType.CARD.value
+        )
+        nb_cards = card_resources.count()
+
+        card_avg_per_day = (
+            cls.objects.filter(
+                resource__in=card_resources,
+                timestamp__date__in=days,
+            )
+            .annotate(day=TruncDate("timestamp"))
+            .values("day", "resource")
+            .annotate(avg_price=models.Avg("price"))
+        )
+
+        dayly_totals = {}
+        skip_days = set()
+        for entry in card_avg_per_day:
+            day = entry["day"]
+            avg_price = entry["avg_price"]
+            if avg_price is not None and day not in skip_days:
+                current = dayly_totals.get(day, (0, 0))
+                dayly_totals[day] = (current[0] + avg_price, current[1] + 1)
+            else:
+                skip_days.add(day)
+                dayly_totals[day] = (None, 0)
+
+        return [
+            dayly_totals[day][0]
+            if dayly_totals.get(day, (0, 0))[1] == nb_cards
+            else None
+            for day in days
+        ]
 
 
 class BuyIn(models.Model, TransactionMixin):
