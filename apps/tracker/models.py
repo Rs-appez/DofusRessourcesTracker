@@ -67,6 +67,11 @@ class Resource(models.Model):
                 self, days=list(month_values.keys())
             )
 
+            self.days_sell_values = SellOut.get_dated_data(
+                self, days=list(month_values.keys())
+            )
+            print("days_sell_values : ", self.days_sell_values)
+
 
 class ResourceImage(models.Model):
     name = models.CharField(max_length=255, unique=True, null=True, blank=True)
@@ -95,6 +100,20 @@ class TransactionMixin:
             .values_list("price", flat=True)
             .first()
         )
+
+    @classmethod
+    def get_dated_data(
+        cls, resource: Resource, days: list[timezone.datetime]
+    ) -> list[float | None]:
+        transactions = (
+            cls.objects.filter(resource_id=resource.id, timestamp__date__in=days)
+            .annotate(day=TruncDate("timestamp"))
+            .values("day")
+            .annotate(avg_per_day=models.Avg("price"))
+        )
+
+        transactions_dict = {t["day"]: t["avg_per_day"] for t in transactions}
+        return [transactions_dict.get(day) for day in days]
 
 
 class ResourceValue(models.Model, TransactionMixin):
