@@ -1,10 +1,12 @@
 <canvas id="priceChart-{{ id }}"></canvas>
+{{ labels|json_script:"chart_labels_"|stringformat:"s"|add:id }}
+{{ data|json_script:"chart_data_"|stringformat:"s"|add:id }}
 <script>
     function initChart() {
 
         let ctx = document.getElementById("priceChart-{{ id }}").getContext("2d");
-        let labels = {{labels| safe }};
-        let data = {{data| safe }};
+        let labels = JSON.parse(document.getElementById('chart_labels_{{ id }}').textContent);
+        let data = JSON.parse(document.getElementById('chart_data_{{ id }}').textContent);
 
     new Chart(ctx, {
         type: "line",
