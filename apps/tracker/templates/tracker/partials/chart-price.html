@@ -1,6 +1,6 @@
 <canvas id="priceChart-{{ id }}"></canvas>
-{{ labels|json_script:"chart_labels_"|stringformat:"s"|add:id }}
-{{ data|json_script:"chart_data_"|stringformat:"s"|add:id }}
+<script type="application/json" id="chart_data_{{ id }}">{{ datas|safe }}</script>
+<script type="application/json" id="chart_labels_{{ id }}">{{ labels|safe }}</script>
 <script>
     function initChart() {
 
