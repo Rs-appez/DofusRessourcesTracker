@@ -13,7 +13,7 @@
                         <img src="{{ wanted.image.image.url }}" alt="{{ wanted.wanted_name }}" />
                     </div>
                     <div class="chart-container">
-                        {% include 'tracker/partials/chart-price.html' with id=wanted.id datas=wanted.days_values labels=wanted.days_labels cards=wanted.cards_price %}
+                        {% include 'tracker/partials/chart-price.html' with id=wanted.id datas=wanted.days_values labels=wanted.days_labels cards=wanted.cards_price sells=wanted.days_sell_values %}
                     </div>
                 </div>
                 <div class="wanted-data">

@@ -42,6 +42,7 @@ def wanted_detail_view(request, wanted_id):
     wanted.days_values = json.dumps(wanted.days_values)
     wanted.days_labels = json.dumps(wanted.days_labels)
     wanted.cards_price = json.dumps(wanted.cards_price)
+    wanted.days_sell_values = json.dumps(wanted.days_sell_values)
 
     form = ResourceValueForm()
     context = {
