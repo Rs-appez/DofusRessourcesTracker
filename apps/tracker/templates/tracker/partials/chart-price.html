@@ -1,14 +1,23 @@
-<canvas id="priceChart-{{ id }}"></canvas>
+<div id="chart-container-{{ id }}"></div>
 <script type="application/json" id="chart_data_{{ id }}">{{ datas|safe }}</script>
 <script type="application/json" id="chart_labels_{{ id }}">{{ labels|safe }}</script>
 <script type="application/json" id="chart_cards_{{ id }}">{{ cards|safe }}</script>
 <script>
     function initChart() {
 
-        let ctx = document.getElementById("priceChart-{{ id }}").getContext("2d");
-        let labels = JSON.parse(document.getElementById('chart_labels_{{ id }}').textContent);
-        let data = JSON.parse(document.getElementById('chart_data_{{ id }}').textContent);
-        let cardsData = JSON.parse(document.getElementById('chart_cards_{{ id }}').textContent);
+        const canvasId = "priceChart-{{ id }}";
+        const containerId = "chart-container-{{ id }}";
+
+        const container = document.getElementById(containerId);
+        const canvas = document.createElement('canvas');
+
+        canvas.id = canvasId;
+        container.appendChild(canvas);
+        
+        const ctx = canvas.getContext("2d");
+        const labels = JSON.parse(document.getElementById('chart_labels_{{ id }}').textContent);
+        const data = JSON.parse(document.getElementById('chart_data_{{ id }}').textContent);
+        const cardsData = JSON.parse(document.getElementById('chart_cards_{{ id }}').textContent);
 
     new Chart(ctx, {
         type: "line",
