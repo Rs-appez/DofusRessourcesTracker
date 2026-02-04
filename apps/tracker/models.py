@@ -119,6 +119,7 @@ class ResourceValue(models.Model, TransactionMixin):
             .annotate(day=TruncDate("timestamp"))
             .values("day")
             .annotate(avg_per_day=models.Avg("price"))
+            .order_by("day")
         )
         if daily_averages.exists():
             avgs = [
