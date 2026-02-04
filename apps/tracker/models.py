@@ -70,7 +70,6 @@ class Resource(models.Model):
             self.days_sell_values = SellOut.get_dated_data(
                 self, days=list(month_values.keys())
             )
-            print("days_sell_values : ", self.days_sell_values)
 
 
 class ResourceImage(models.Model):
