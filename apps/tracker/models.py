@@ -46,10 +46,7 @@ class Resource(models.Model):
             self.average_value, decimal_pos=2, force_grouping=True
         )
 
-        data = [
-            (value["avg_per_day"], value["day"].strftime("%d-%m"))
-            for value in month_values
-        ]
+        data = [(value, key.strftime("%d-%m")) for key, value in month_values.items()]
 
         self.days_values, self.days_labels = (
             (list(x) for x in zip(*data)) if data else ([], [])
@@ -107,8 +104,12 @@ class ResourceValue(models.Model, TransactionMixin):
     @classmethod
     def get_average_price(
         cls, resource: Resource, days=7
-    ) -> tuple[float, list[dict[str, timezone.datetime]]] | None:
+    ) -> tuple[float | None, list[dict[str, timezone.datetime]]]:
         time_threshold = timezone.now() - timedelta(days=days)
+        all_dates = [
+            (time_threshold + timedelta(days=day)).date() for day in range(days)
+        ]
+        results = {date: None for date in all_dates}
 
         daily_averages = (
             cls.objects.filter(
@@ -122,6 +123,9 @@ class ResourceValue(models.Model, TransactionMixin):
             .order_by("day")
         )
         if daily_averages.exists():
+            for entry in daily_averages:
+                results[entry["day"]] = entry["avg_per_day"]
+
             avgs = [
                 d["avg_per_day"] for d in daily_averages if d["avg_per_day"] is not None
             ]
@@ -131,8 +135,8 @@ class ResourceValue(models.Model, TransactionMixin):
                 (sorted_avgs[n // 2])
                 if n % 2 == 1
                 else (sorted_avgs[n // 2 - 1] + sorted_avgs[n // 2]) / 2
-            ), daily_averages
-        return None
+            ), results
+        return None, results
 
 
 class BuyIn(models.Model, TransactionMixin):
