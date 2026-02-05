@@ -2,6 +2,7 @@ from datetime import timedelta
 from enum import Enum
 
 from django.db import models
+from django.db.models import Count
 from django.db.models.functions import TruncDate
 from django.utils import timezone
 from django.utils.formats import number_format
@@ -50,6 +51,10 @@ class Resource(models.Model):
 
         self.days_values, self.days_labels = (
             (list(x) for x in zip(*data)) if data else ([], [])
+        )
+
+        self.empty_values = ResourceValue.get_empty_values(
+            self, days=list(month_values.keys())
         )
 
         if self.resource_type == ResourceType.WANTED.value:
@@ -200,6 +205,24 @@ class ResourceValue(models.Model, TransactionMixin):
             else None
             for day in days
         ]
+
+    @classmethod
+    def get_empty_values(
+        cls, resource: Resource, days: list[timezone.datetime]
+    ) -> list[int | None]:
+        empty_values = (
+            cls.objects.filter(
+                resource_id=resource.id,
+                timestamp__date__in=days,
+                price__isnull=True,
+            )
+            .annotate(day=TruncDate("timestamp"))
+            .values("day")
+            .annotate(count=Count("id"))
+        )
+
+        empty_dict = {item["day"]: item["count"] for item in empty_values}
+        return [empty_dict.get(day, None) for day in days]
 
 
 class BuyIn(models.Model, TransactionMixin):
