@@ -2,7 +2,7 @@ from datetime import timedelta
 from enum import Enum
 
 from django.db import models
-from django.db.models import Count
+from django.db.models import Count, Avg
 from django.db.models.functions import TruncDate
 from django.utils import timezone
 from django.utils.formats import number_format
@@ -93,7 +93,7 @@ class TransactionMixin:
             resource_id=resource.id, timestamp__gte=time_threshold
         )
         if transactions.exists():
-            return transactions.aggregate(models.Avg("price"))["price__avg"]
+            return transactions.aggregate(Avg("price"))["price__avg"]
         return None
 
     @classmethod
@@ -113,7 +113,7 @@ class TransactionMixin:
             cls.objects.filter(resource_id=resource.id, timestamp__date__in=days)
             .annotate(day=TruncDate("timestamp"))
             .values("day")
-            .annotate(avg_per_day=models.Avg("price"))
+            .annotate(avg_per_day=Avg("price"))
         )
 
         transactions_dict = {t["day"]: t["avg_per_day"] for t in transactions}
@@ -146,7 +146,7 @@ class ResourceValue(models.Model, TransactionMixin):
             )
             .annotate(day=TruncDate("timestamp"))
             .values("day")
-            .annotate(avg_per_day=models.Avg("price"))
+            .annotate(avg_per_day=Avg("price"))
             .order_by("day")
         )
         if daily_averages.exists():
@@ -184,7 +184,7 @@ class ResourceValue(models.Model, TransactionMixin):
             )
             .annotate(day=TruncDate("timestamp"))
             .values("day", "resource")
-            .annotate(avg_price=models.Avg("price"))
+            .annotate(avg_price=Avg("price"))
         )
 
         dayly_totals = {}
