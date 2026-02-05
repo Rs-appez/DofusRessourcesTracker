@@ -1,13 +1,17 @@
-<div id="chart-container-{{ id }}"></div>
-<script type="application/json" id="chart_data_{{ id }}">{{ datas|safe }}</script>
-<script type="application/json" id="chart_labels_{{ id }}">{{ labels|safe }}</script>
-<script type="application/json" id="chart_cards_{{ id }}">{{ cards|safe }}</script>
-<script type="application/json" id="chart_sells_{{ id }}">{{ sells|safe }}</script>
-<script>
+{% if not wanted %}
+    <p>No data available to display the chart.</p>
+{% else %}
+    <div id="chart-container-{{ wanted.id }}"></div>
+    <script type="application/json" id="chart_data_{{ wanted.id }}">{{ wanted.days_values|safe }}</script>
+    <script type="application/json" id="chart_labels_{{ wanted.id }}">{{ wanted.days_labels|safe }}</script>
+    <script type="application/json" id="chart_cards_{{ wanted.id }}">{{ wanted.cards_price|safe }}</script>
+    <script type="application/json" id="chart_sells_{{ wanted.id }}">{{ wanted.days_sell_values|safe }}</script>
+    <script type="application/json" id="chart_empty_{{ wanted.id }}">{{ wanted.empty_values|safe }}</script>
+    <script>
     function initChart() {
 
-        const canvasId = "priceChart-{{ id }}";
-        const containerId = "chart-container-{{ id }}";
+        const canvasId = "priceChart-{{ wanted.id }}";
+        const containerId = "chart-container-{{ wanted.id }}";
 
         const container = document.getElementById(containerId);
         const canvas = document.createElement('canvas');
@@ -16,10 +20,11 @@
         container.appendChild(canvas);
         
         const ctx = canvas.getContext("2d");
-        const labels = JSON.parse(document.getElementById('chart_labels_{{ id }}').textContent);
-        const data = JSON.parse(document.getElementById('chart_data_{{ id }}').textContent);
-        const cardsData = JSON.parse(document.getElementById('chart_cards_{{ id }}').textContent);
-        const sellsData = JSON.parse(document.getElementById('chart_sells_{{ id }}').textContent);
+        const labels = JSON.parse(document.getElementById('chart_labels_{{ wanted.id }}').textContent);
+        const data = JSON.parse(document.getElementById('chart_data_{{ wanted.id }}').textContent);
+        const cardsData = JSON.parse(document.getElementById('chart_cards_{{ wanted.id }}').textContent);
+        const sellsData = JSON.parse(document.getElementById('chart_sells_{{ wanted.id }}').textContent);
+        const emptyData = JSON.parse(document.getElementById('chart_empty_{{ wanted.id }}').textContent);
 
     new Chart(ctx, {
         type: "line",
@@ -47,8 +52,20 @@
                     data: sellsData,
                     borderColor: "rgba(255, 159, 64, 1)",
                     backgroundColor: "rgba(255, 159, 64, 0.2)",
+
                     tension: 0.1,
                     pointRadius: 5,
+                },
+                {
+                    label: "Empty stock",
+                    data: emptyData,
+                    type : "bar",
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    backgroundColor: "rgba(255, 99, 132, 0.2)",
+                    // barPercentage: 1.0,
+                    // categoryPercentage: 1.0,
+                    tension: 0.1,
+                    yAxisID: 'yEmpty',
                 },
             ],
         },
@@ -67,8 +84,23 @@
                     display: false,
                 },
             },
+        scales: {
+            y: {
+                title: {
+                    display: false,
+                },
+            },
+            yEmpty: {
+                type: 'linear',
+                position: 'right',
+                min: 0,
+                max: 1,
+                display: false,
+            }
+        }
         },
     });
   };
     initChart();
-</script>
+    </script>
+{% endif %}
