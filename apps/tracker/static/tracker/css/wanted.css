@@ -1,0 +1,13 @@
+.wanted-page-container {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  height: 100vh;
+}
+.wanted-list-container {
+  flex: 0 0 180px;
+}
+
+.wanted-detail-container {
+  flex: 1;
+}

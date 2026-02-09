@@ -1,9 +1,8 @@
 .wanted-container {
-  max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, 80px);
+  gap: 10px;
 }
 
 .wanted-entry {
