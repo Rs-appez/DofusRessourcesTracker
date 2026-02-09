@@ -5,7 +5,7 @@ from django.utils.formats import number_format
 from django.views.decorators.http import require_POST
 
 from apps.tracker.forms import ResourceValueForm
-from apps.tracker.models import Resource, ResourceType, ResourceValue, SellOut
+from apps.tracker.models import Resource, ResourceType, ResourceValue
 
 
 @require_POST
