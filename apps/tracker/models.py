@@ -1,8 +1,9 @@
+import json
 from datetime import timedelta
 from enum import Enum
 
 from django.db import models
-from django.db.models import Count, Avg
+from django.db.models import Avg, Count
 from django.db.models.functions import TruncDate
 from django.utils import timezone
 from django.utils.formats import number_format
@@ -75,6 +76,14 @@ class Resource(models.Model):
             self.days_sell_values = SellOut.get_dated_data(
                 self, days=list(month_values.keys())
             )
+
+    def dumps_stats(self):
+        self.days_values = json.dumps(self.days_values)
+        self.days_labels = json.dumps(self.days_labels)
+        self.empty_values = json.dumps(self.empty_values)
+        if self.resource_type == ResourceType.WANTED.value:
+            self.cards_price = json.dumps(self.cards_price)
+            self.days_sell_values = json.dumps(self.days_sell_values)
 
 
 class ResourceImage(models.Model):

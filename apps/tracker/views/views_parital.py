@@ -1,4 +1,3 @@
-import json
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404, render
 from django.utils.formats import number_format
@@ -39,11 +38,7 @@ def wanted_detail_view(request, wanted_id):
         else "N/A"
     )
 
-    wanted.days_values = json.dumps(wanted.days_values)
-    wanted.days_labels = json.dumps(wanted.days_labels)
-    wanted.cards_price = json.dumps(wanted.cards_price)
-    wanted.days_sell_values = json.dumps(wanted.days_sell_values)
-    wanted.empty_values = json.dumps(wanted.empty_values)
+    wanted.dumps_stats()
 
     form = ResourceValueForm()
     context = {
