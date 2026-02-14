@@ -27,6 +27,7 @@ def wanted_detail_view(request, wanted_id):
 
     for card in cards:
         card.add_stats()
+        card.dumps_stats()
 
     wanted.all_card_price = sum(
         [card.current_value for card in cards[:-1] if card.current_value]
