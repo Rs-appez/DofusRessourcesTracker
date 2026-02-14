@@ -1,0 +1,14 @@
+{% load static %}
+{% if not wanted %}
+    <p>No data available to display the chart.</p>
+{% else %}
+    <div id="chart-container-{{ wanted.id }}"></div>
+    <script type="application/json" id="chart_data_{{ wanted.id }}">{{ wanted.days_values|safe }}</script>
+    <script type="application/json" id="chart_labels_{{ wanted.id }}">{{ wanted.days_labels|safe }}</script>
+    <script type="application/json" id="chart_cards_{{ wanted.id }}">{{ wanted.cards_price|safe }}</script>
+    <script type="application/json" id="chart_sells_{{ wanted.id }}">{{ wanted.days_sell_values|safe }}</script>
+    <script type="application/json" id="chart_empty_{{ wanted.id }}">{{ wanted.empty_values|safe }}</script>
+    <script src="{% static "tracker/js/wanted-chart.js" %}"
+            data-id="{{ wanted.id}}"
+            defer></script>
+{% endif %}
