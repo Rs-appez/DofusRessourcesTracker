@@ -1,3 +1,4 @@
+{% load static %}
 <div class="card ">
     <div class="card-image">
         <img src="{{ card.image.image.url }}" alt="Fragment {{ forloop.counter }}" />
@@ -23,4 +24,5 @@
             </svg>
         </div>
     </div>
+    {% include 'tracker/partials/card-modal.html' %}
 </div>

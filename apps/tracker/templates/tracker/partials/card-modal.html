@@ -1,0 +1,10 @@
+{% load static %}
+<dialog id="cardDialog-{{ card.id }}" class="cardDialog" closedby="any">
+    {% if not card %}
+        <p>Card not found.</p>
+    {% else %}
+        <div class="card-modal-content">
+            <h2>{{ card.name }}</h2>
+        </div>
+    {% endif %}
+</dialog>
