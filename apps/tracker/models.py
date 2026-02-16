@@ -18,6 +18,7 @@ class ResourceType(Enum):
     WANTED = 5
     CARD = 6
     QUEST = 7
+    MISC = 8
 
 
 class Resource(models.Model):
