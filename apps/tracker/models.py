@@ -142,7 +142,7 @@ class ResourceValue(models.Model, TransactionMixin):
     def get_average_price(
         cls, resource: Resource, days=7
     ) -> tuple[float | None, list[dict[str, timezone.datetime]]]:
-        time_threshold = timezone.now() - timedelta(days=days)
+        time_threshold = timezone.now() - timedelta(days=days - 1)
         all_dates = [
             (time_threshold + timedelta(days=day)).date() for day in range(days)
         ]
