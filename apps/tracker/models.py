@@ -132,7 +132,7 @@ class TransactionMixin:
 
 class ResourceValue(models.Model, TransactionMixin):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
-    price = models.SmallIntegerField(null=True, blank=True)
+    price = models.IntegerField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -237,7 +237,7 @@ class ResourceValue(models.Model, TransactionMixin):
 
 class BuyIn(models.Model, TransactionMixin):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
-    price = models.SmallIntegerField()
+    price = models.IntegerField()
     quantity = models.SmallIntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -247,7 +247,7 @@ class BuyIn(models.Model, TransactionMixin):
 
 class SellOut(models.Model, TransactionMixin):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
-    price = models.SmallIntegerField()
+    price = models.IntegerField()
     quantity = models.SmallIntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
