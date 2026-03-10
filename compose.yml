@@ -1,0 +1,28 @@
+services:
+  vault-agent:
+    image: hashicorp/vault:latest
+    container_name: dofRessTrack-vault-agent
+    command: vault agent -config=/vault/config/agent.hcl
+    volumes:
+      - ./agent-config:/vault/config:ro
+      - shared_secrets:/shared/secrets
+    environment:
+      VAULT_ADDR: "https://vault.appez.cafe"
+
+  dofRessTrack:
+    image: registry.appez.cafe/dofresstrack:latest
+    container_name: dofRessTrack
+    ports:
+      - "2004:8000"
+    volumes:
+      # Mount the shared volume to /secrets
+      - shared_secrets:/secrets:ro
+    depends_on:
+      - vault-agent
+
+volumes:
+  shared_secrets:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: size=10m,uid=100
