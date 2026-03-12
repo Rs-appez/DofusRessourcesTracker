@@ -12,3 +12,6 @@ __pycache__/
 *.bak
 *.sh
 *.sql
+
+nginx/
+agent-config/
