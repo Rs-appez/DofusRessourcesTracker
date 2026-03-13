@@ -20,7 +20,7 @@ services:
     volumes:
       - shared_secrets:/secrets:ro
       - static_files:/app/staticfiles:ro
-      - media_files:/app/media:ro
+      - media_files:/app/media:rw
     depends_on:
       - vault-agent
     networks:
