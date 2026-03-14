@@ -7,7 +7,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN SECRET_KEY="non-secret-key-for-building-purposes" python3 manage.py collectstatic --noinput
-
 EXPOSE 8000
 CMD ["sh","./runserver"]
