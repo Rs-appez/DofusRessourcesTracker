@@ -19,7 +19,7 @@ services:
     container_name: dofRessTrack
     volumes:
       - shared_secrets:/secrets:ro
-      - static_files:/app/staticfiles:ro
+      - static_files:/app/staticfiles:rw
       - media_files:/app/media:rw
     depends_on:
       - vault-agent
