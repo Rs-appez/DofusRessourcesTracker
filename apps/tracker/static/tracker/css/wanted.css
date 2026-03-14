@@ -6,6 +6,7 @@
 }
 .wanted-list-container {
   flex: 0 0 180px;
+  height: 95vh;
 }
 
 .wanted-detail-container {
