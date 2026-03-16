@@ -1,10 +1,12 @@
-let dialog = document.getElementById("cardDialog");
-let form = document.getElementById("valueForm");
-let clickableElements = null;
+let dialog;
+let form;
+let btn;
+let clickableElements;
 
 function refreshElements() {
     dialog = document.getElementById("cardDialog");
     form = document.getElementById("valueForm");
+    btn = form ? form.querySelector("input[type='submit']") : null;
     clickableElements = document.querySelectorAll(".open-value-modal");
     clickableElements.forEach((element) => {
         element.addEventListener("click", openModal);
@@ -27,12 +29,15 @@ function openModal(event) {
     post_url = post_url.replace(/\d+/, element.dataset.id);
     form.setAttribute("hx-post", post_url);
 
+    btn.disabled = false;
+
     htmx.process(form);
 
     dialog.showModal();
 }
 
 function closeModal() {
+    btn.disabled = true;
     dialog.close();
     form.reset();
 }
@@ -41,10 +46,9 @@ refreshElements();
 
 document.body.addEventListener("resourceValueAdded", function() {
     const url = document.getElementById("wanted-info").dataset.allCardsUrl;
-    htmx.ajax("POST", url, { target: "#all-card-price" });
 
-    dialog.close();
-    form.reset();
+    closeModal();
+    htmx.ajax("POST", url, { target: "#all-card-price" });
 });
 
 document.body.addEventListener("htmx:afterSwap", function(event) {
