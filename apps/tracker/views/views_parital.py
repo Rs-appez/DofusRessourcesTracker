@@ -83,7 +83,7 @@ def add_value_view(request, resource_id):
 def add_sell_value_view(request, resource_id):
     resource = get_object_or_404(Resource, id=resource_id)
 
-    form = ResourceValueForm(request.POST)
+    form = SellOutValueForm(request.POST)
     if not form.is_valid():
         raise NotImplementedError("Form validation not implemented yet")
 
@@ -91,12 +91,10 @@ def add_sell_value_view(request, resource_id):
     quantity = form.cleaned_data["quantity"]
     SellOut.objects.create(resource=resource, price=value, quantity=quantity)
 
-    print("Sell value added:", resource.name, value, quantity)
-    return
     resource.add_sell_stats()
 
     response = render(
-        request, "tracker/partials/resource-price.html", {"resource": resource}
+        request, "tracker/partials/resource-sell-value.html", {"resource": resource}
     )
     response["HX-Trigger"] = "resourceSellValueAdded"
     return response
