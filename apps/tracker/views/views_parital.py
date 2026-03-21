@@ -70,7 +70,7 @@ def add_value_view(request, resource_id):
     value = form.cleaned_data["price"]
     ResourceValue.objects.create(resource=resource, price=value)
 
-    resource.add_stats()
+    resource.add_value_stats()
 
     response = render(
         request, "tracker/partials/resource-price.html", {"resource": resource}
@@ -93,6 +93,7 @@ def add_sell_value_view(request, resource_id):
 
     print("Sell value added:", resource.name, value, quantity)
     return
+    resource.add_sell_stats()
 
     response = render(
         request, "tracker/partials/resource-price.html", {"resource": resource}

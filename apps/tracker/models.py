@@ -37,6 +37,12 @@ class Resource(models.Model):
         return self.name
 
     def add_stats(self):
+        self.add_value_stats()
+
+        if self.resource_type == ResourceType.WANTED.value:
+            self.add_sell_stats()
+
+    def add_value_stats(self):
         self.current_value = ResourceValue.get_last_price(self)
         self.current_value_formatted = number_format(
             self.current_value, decimal_pos=0, force_grouping=True
@@ -60,23 +66,23 @@ class Resource(models.Model):
         )
 
         if self.resource_type == ResourceType.WANTED.value:
-            self.last_sell_value = SellOut.get_last_price(self)
-            self.last_sell_value_formatted = number_format(
-                self.last_sell_value, decimal_pos=0, force_grouping=True
-            )
-
-            self.average_sell_values = SellOut.get_average_price(self, days=30)
-            self.average_sell_values_formatted = number_format(
-                self.average_sell_values, decimal_pos=2, force_grouping=True
-            )
-
             self.cards_price = ResourceValue.get_all_cards_price_per_day(
                 self, days=list(month_values.keys())
             )
-
             self.days_sell_values = SellOut.get_dated_data(
                 self, days=list(month_values.keys())
             )
+
+    def add_sell_stats(self):
+        self.last_sell_value = SellOut.get_last_price(self)
+        self.last_sell_value_formatted = number_format(
+            self.last_sell_value, decimal_pos=0, force_grouping=True
+        )
+
+        self.average_sell_values = SellOut.get_average_price(self, days=30)
+        self.average_sell_values_formatted = number_format(
+            self.average_sell_values, decimal_pos=2, force_grouping=True
+        )
 
     def dumps_stats(self):
         self.days_values = json.dumps(self.days_values)
