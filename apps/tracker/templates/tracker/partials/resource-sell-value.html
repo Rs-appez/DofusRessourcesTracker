@@ -1,0 +1,6 @@
+{% if resource is None %}
+    <p>No data available.</p>
+{% else %}
+    <h2>Last Sell : {{ resource.last_sell_value_formatted }} K</h2>
+    <h3>Average Sell : {{ resource.average_sell_values_formatted }} K</h3>
+{% endif %}

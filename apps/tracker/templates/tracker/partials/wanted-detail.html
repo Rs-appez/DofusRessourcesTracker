@@ -23,8 +23,7 @@
                             {% include 'tracker/partials/resource-price.html'  with resource=wanted %}
                         </div>
                         <div id="sell_values" class="open-modal">
-                            <h2>Last Sell : {{ wanted.last_sell_value_formatted }} K</h2>
-                            <h3>Average Sell : {{ wanted.average_sell_values_formatted }} K</h3>
+                            {% include 'tracker/partials/resource-sell-value.html' with resource=wanted %}
                         </div>
                         <div id="all-card-price">{% include 'tracker/partials/all-card-price.html' %}</div>
                     </div>
