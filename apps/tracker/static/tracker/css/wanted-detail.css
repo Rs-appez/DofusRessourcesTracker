@@ -150,7 +150,8 @@
   font-size: 1rem;
 }
 
-.open-value-modal {
+.open-value-modal,
+.open-modal {
   cursor: pointer;
 }
 

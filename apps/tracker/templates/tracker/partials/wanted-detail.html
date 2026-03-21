@@ -22,7 +22,7 @@
                              data-id="{{ wanted.id }}">
                             {% include 'tracker/partials/resource-price.html'  with resource=wanted %}
                         </div>
-                        <div>
+                        <div id="sell_values" class="open-modal">
                             <h2>Last Sell : {{ wanted.last_sell_value_formatted }} K</h2>
                             <h3>Average Sell : {{ wanted.average_sell_values_formatted }} K</h3>
                         </div>
@@ -47,5 +47,6 @@
             </div>
         </div>
         {% include 'tracker/partials/value-modal.html' %}
+        {% include 'tracker/partials/sell-modal.html' %}
     {% endif %}
 </div>
