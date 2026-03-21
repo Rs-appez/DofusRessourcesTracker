@@ -2,9 +2,10 @@
     <div class="dialog-content">
         <h2>Enter the sell value for :</h2>
         <h3>{{ wanted.name}}</h3>
-        <form hx-post="{% url 'tracker:add_sell_value' wanted.id %}" class="modal-form" id="sellForm">
+        <form hx-post="{% url 'tracker:add_sell_value' wanted.id %}" hx-target="#sell_values" class="modal-form"
+            id="sellForm">
             {% csrf_token %} {{ formSell }}
-            <input type="submit" value="Submit" disabled />
+            <input type="submit" value="Submit" />
         </form>
     </div>
 </dialog>
