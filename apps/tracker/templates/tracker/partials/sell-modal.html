@@ -1,0 +1,10 @@
+<dialog id="sellDialog" class="cardDialog" closedby="any">
+    <div class="dialog-content">
+        <h2>Enter the sell value for :</h2>
+        <h3>{{ wanted.name}}</h3>
+        <form hx-post="{% url 'tracker:add_sell_value' wanted.id %}" class="modal-form" id="sellForm">
+            {% csrf_token %} {{ form }}
+            <input type="submit" value="Submit" disabled />
+        </form>
+    </div>
+</dialog>
