@@ -25,6 +25,11 @@ urlpatterns = [
         "add-value/<int:resource_id>/", views_parital.add_value_view, name="add_value"
     ),
     path(
+        "add-sell-value/<int:resource_id>/",
+        views_parital.add_sell_value_view,
+        name="add_sell_value",
+    ),
+    path(
         "all-price-cards/<int:wanted_id>/",
         views_parital.get_all_price_card_view,
         name="all_price_cards",

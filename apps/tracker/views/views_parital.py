@@ -4,7 +4,7 @@ from django.utils.formats import number_format
 from django.views.decorators.http import require_POST
 
 from apps.tracker.forms import ResourceValueForm
-from apps.tracker.models import Resource, ResourceType, ResourceValue
+from apps.tracker.models import Resource, ResourceType, ResourceValue, SellOut
 
 
 @require_POST
@@ -74,6 +74,28 @@ def add_value_view(request, resource_id):
         request, "tracker/partials/resource-price.html", {"resource": resource}
     )
     response["HX-Trigger"] = "resourceValueAdded"
+    return response
+
+
+@require_POST
+def add_sell_value_view(request, resource_id):
+    resource = get_object_or_404(Resource, id=resource_id)
+
+    form = ResourceValueForm(request.POST)
+    if not form.is_valid():
+        raise NotImplementedError("Form validation not implemented yet")
+
+    value = form.cleaned_data["price"]
+    quantity = form.cleaned_data["quantity"]
+    SellOut.objects.create(resource=resource, price=value, quantity=quantity)
+
+    print("Sell value added:", resource.name, value, quantity)
+    return
+
+    response = render(
+        request, "tracker/partials/resource-price.html", {"resource": resource}
+    )
+    response["HX-Trigger"] = "resourceSellValueAdded"
     return response
 
 
