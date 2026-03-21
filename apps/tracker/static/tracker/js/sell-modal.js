@@ -1,12 +1,25 @@
+let sellDialog;
+let sellForm;
+
 function refreshSellElements() {
-    let sell_div = document.getElementById("sell_values");
-    if (sell_div) sell_div.addEventListener("click", openSellModal);
+    sellDialog = document.getElementById("sellDialog");
+    sellForm = document.getElementById("sellForm");
+    let sellDiv = document.getElementById("sell_values");
+    if (sellDiv) sellDiv.addEventListener("click", openSellModal);
 }
 
 function openSellModal(event) {
-    let dialog = document.getElementById("sellDialog");
-    if (dialog) dialog.showModal();
+    if (sellDialog) sellDialog.showModal();
 }
+
+function closeSellModal() {
+    sellDialog.close();
+    sellForm.reset();
+}
+
+document.body.addEventListener("resourceSellValueAdded", function() {
+    closeSellModal();
+});
 
 document.body.addEventListener("htmx:afterSwap", function(event) {
     if (event.detail.target.id === "wanted-detail-container")
