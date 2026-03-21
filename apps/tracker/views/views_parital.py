@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.formats import number_format
 from django.views.decorators.http import require_POST
 
-from apps.tracker.forms import ResourceValueForm
+from apps.tracker.forms import ResourceValueForm, SellOutValueForm
 from apps.tracker.models import Resource, ResourceType, ResourceValue, SellOut
 
 
@@ -41,9 +41,11 @@ def wanted_detail_view(request, wanted_id):
 
     wanted.dumps_stats()
 
-    form = ResourceValueForm()
+    formValue = ResourceValueForm()
+    fromSell = SellOutValueForm()
     context = {
-        "form": form,
+        "formValue": formValue,
+        "formSell": fromSell,
         "wanted": wanted,
         "cards": cards,
     }
