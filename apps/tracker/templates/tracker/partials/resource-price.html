@@ -4,7 +4,10 @@
     {% if resource.current_value is None %}
         <h4>Empty</h4>
     {% else %}
-        <h4>Current Price: {{ resource.current_value_formatted }} K</h4>
+        <h4 data-current-price="{{ resource.current_value }}"
+            class="current-price">Current Price: {{ resource.current_value_formatted }} K</h4>
     {% endif %}
-    <h5>Median Price: {{ resource.average_value_formatted }} K</h5>
+    <h5 data-median-price="{{ resource.average_value }}" class="median-price">
+        Median Price: {{ resource.average_value_formatted }} K
+    </h5>
 {% endif %}
