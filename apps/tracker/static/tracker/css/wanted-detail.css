@@ -190,3 +190,11 @@
 .chart-container {
   flex: 7;
 }
+
+.good-price {
+  color: var(--font-color-success) !important;
+}
+
+.bad-price {
+  color: var(--font-color-error) !important;
+}
