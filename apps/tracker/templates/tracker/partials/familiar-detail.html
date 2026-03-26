@@ -1,1 +1,7 @@
-familiar
+<div class="familiar-detail-container" id="familiar-detail-container">
+    {% if not familiar %}
+        <p>Familiar item not found.</p>
+    {% else %}
+        <h1>{{ familiar.name }}</h1>
+    {% endif %}
+</div>
