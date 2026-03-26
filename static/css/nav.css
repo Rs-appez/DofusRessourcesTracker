@@ -1,8 +1,6 @@
 nav {
   background: #34495e;
   box-shadow: var(--box-shadow);
-  padding: 1rem 2rem;
-  margin-bottom: 2rem;
 }
 
 nav a {
@@ -13,7 +11,7 @@ nav a {
 }
 
 nav a:hover {
-  color: var(--link-color-hover);
+  color: var(--primary-color-hover);
 }
 
 nav > * {
