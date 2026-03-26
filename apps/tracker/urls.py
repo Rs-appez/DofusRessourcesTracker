@@ -9,6 +9,7 @@ urlpatterns = [
     # Page views
     path("create-wanted/", views.create_wanted_view, name="create_wanted"),
     path("wanted/", views.wanted_view, name="wanted"),
+    path("familiar/", views.familiar_view, name="familiar"),
     # API views
     path("api/set-lang/", set_language, name="set_language"),
     path(
