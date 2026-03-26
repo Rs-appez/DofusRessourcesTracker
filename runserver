@@ -7,4 +7,5 @@ done
 
 ln -sf /secrets/.env /app/.env
 python3 manage.py collectstatic --noinput
+python3 manage.py migrate --noinput
 gunicorn --bind :8000 --workers 2 dofRessTrack.wsgi
