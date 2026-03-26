@@ -50,4 +50,5 @@ def create_wanted_view(request):
 
 
 def familiar_view(request):
-    return render(request, "tracker/familiar.html")
+    familars = Resource.objects.filter(resource_type=ResourceType.FAMILIAR.value)
+    return render(request, "tracker/familiar.html", {"familars": familars})
