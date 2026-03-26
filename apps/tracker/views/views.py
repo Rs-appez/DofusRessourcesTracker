@@ -59,7 +59,8 @@ def create_wanted_view(request):
 
 
 def familiar_view(request):
-    familars = Resource.objects.filter(resource_type=ResourceType.FAMILIAR.value)
+    familiars = Resource.objects.filter(resource_type=ResourceType.FAMILIAR.value)
+    print("familars : ", familiars)
     context = {
         "title": "Familier",
         "list_template": "tracker/partials/familiar-list.html",
@@ -67,5 +68,5 @@ def familiar_view(request):
         # "resource_extra_css": "tracker/css/familiar-detail.css",
         # "resource_extra_js": "tracker/js/familiar-detail.js",
     }
-    context.update({"familars": familars})
+    context.update({"familiars": familiars})
     return render(request, "tracker/resource.html", context=context)
