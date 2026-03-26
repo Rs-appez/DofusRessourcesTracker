@@ -23,6 +23,11 @@ urlpatterns = [
         name="wanted_detail",
     ),
     path(
+        "familiar/<int:familiar_id>/",
+        views_parital.familiar_detail_view,
+        name="familiar_detail",
+    ),
+    path(
         "add-value/<int:resource_id>/", views_parital.add_value_view, name="add_value"
     ),
     path(
