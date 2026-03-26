@@ -19,6 +19,7 @@ class ResourceType(Enum):
     CARD = 6
     QUEST = 7
     MISC = 8
+    FAMILIAR = 9
 
 
 class Resource(models.Model):
