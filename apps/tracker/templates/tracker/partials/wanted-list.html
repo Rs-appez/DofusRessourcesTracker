@@ -1,6 +1,6 @@
-<div class="wanted-container">
+<div class="resource-container">
     {% for wanted in wanteds %}
-        <div class="wanted-entry"
+        <div class="resource-entry"
              hx-post="{% url 'tracker:wanted_detail' wanted.id %}"
              hx-trigger="click"
              hx-target="#wanted-detail-container"
