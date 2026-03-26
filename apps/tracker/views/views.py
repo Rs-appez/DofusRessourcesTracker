@@ -47,3 +47,7 @@ def create_wanted_view(request):
         ).use_in.add(card)
 
     return redirect("tracker:create_wanted")
+
+
+def familiar_view(request):
+    return render(request, "tracker/familiar.html")
