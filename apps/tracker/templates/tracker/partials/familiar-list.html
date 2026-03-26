@@ -1,0 +1,18 @@
+<div class="resource-container">
+    {% for familiar in familiars %}
+        <div class="resource-entry"
+             hx-post="{% url 'tracker:familiar_detail' familiar.id %}"
+             hx-trigger="click"
+             hx-target="#familiar-detail-container"
+             hx-swap="innerHTML">
+            {% csrf_token %}
+            {% if familiar.image %}
+                <img src="{{ familiar.image.image.url }}" alt="{{ familiar.name }}" />
+            {% else %}
+                <p>No image available.</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No familiar entries found.</p>
+    {% endfor %}
+</div>
