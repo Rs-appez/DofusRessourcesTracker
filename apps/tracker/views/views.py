@@ -10,7 +10,16 @@ def dashboard_view(request):
 
 def wanted_view(request):
     wanteds = Resource.objects.filter(resource_type=ResourceType.WANTED.value)
-    return render(request, "tracker/wanted.html", {"wanteds": wanteds})
+    context = {
+        "title": "Wanted",
+        "list_template": "tracker/partials/wanted-list.html",
+        "detail_template": "tracker/partials/wanted-detail.html",
+        "resource_extra_css": "tracker/css/wanted-detail.css",
+        "resource_extra_js": "tracker/js/wanted-detail.js",
+    }
+    context.update({"wanteds": wanteds})
+
+    return render(request, "tracker/resource.html", context=context)
 
 
 def create_wanted_view(request):
@@ -51,4 +60,12 @@ def create_wanted_view(request):
 
 def familiar_view(request):
     familars = Resource.objects.filter(resource_type=ResourceType.FAMILIAR.value)
-    return render(request, "tracker/familiar.html", {"familars": familars})
+    context = {
+        "title": "Familier",
+        "list_template": "tracker/partials/familiar-list.html",
+        "detail_template": "tracker/partials/familiar-detail.html",
+        # "resource_extra_css": "tracker/css/familiar-detail.css",
+        # "resource_extra_js": "tracker/js/familiar-detail.js",
+    }
+    context.update({"familars": familars})
+    return render(request, "tracker/resource.html", context=context)
