@@ -7,6 +7,9 @@
   --font-color-success: #27ae60;
   --font-color-error: #e74c3c;
 
+  --link-color: #ecf0f1;
+  --link-color-hover: #3498db;
+
   --button-color-disabled: #cccccc;
 
   --background-color: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
