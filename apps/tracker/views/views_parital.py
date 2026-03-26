@@ -60,6 +60,32 @@ def wanted_detail_view(request, wanted_id):
 
 
 @require_POST
+def familiar_detail_view(request, familiar_id):
+    familiar = get_object_or_404(Resource, id=familiar_id)
+    if familiar.resource_type != ResourceType.FAMILIAR.value:
+        raise Http404("Familiar not found")
+
+    familiar.add_stats()
+    familiar.dumps_stats()
+
+    formValue = ResourceValueForm()
+    fromSell = SellOutValueForm()
+    context = {
+        "formValue": formValue,
+        "formSell": fromSell,
+        "familiar": familiar,
+    }
+
+    response = render(
+        request,
+        "tracker/partials/familiar-detail.html",
+        context,
+    )
+    response["HX-Trigger"] = "familiarDetailLoaded"
+    return response
+
+
+@require_POST
 def add_value_view(request, resource_id):
     resource = get_object_or_404(Resource, id=resource_id)
 
