@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'tracker/css/resource-list.css' %}" rel="stylesheet" />
+    <link href="{% static 'tracker/css/resource.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'tracker/css/modal.css' %}" />
+    {% if resource_extra_css %}
+        <link rel="stylesheet" href="{% static resource_extra_css %}" />
+    {% endif %}
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static 'tracker/js/value-modal.js' %}" defer></script>
+    <script src="{% static 'tracker/js/sell-modal.js' %}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    {% if resource_extra_js %}
+        <script src="{% static resource_extra_js %}" defer></script>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="resource-page-container">
+        <div class="resource-list-container">{% include list_template %}</div>
+        <div class="resource-detail-container">{% include detail_template %}</div>
+        <div class="resource-list-container"></div>
+    </div>
+{% endblock %}

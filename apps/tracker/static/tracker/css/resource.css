@@ -1,14 +1,14 @@
-.wanted-page-container {
+.resource-page-container {
   display: flex;
   gap: 2rem;
   padding: 0 2rem;
   height: 100%;
 }
-.wanted-list-container {
+.resource-list-container {
   flex: 0 0 180px;
   height: 99%;
 }
 
-.wanted-detail-container {
+.resource-detail-container {
   flex: 1;
 }
