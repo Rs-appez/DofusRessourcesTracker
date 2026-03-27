@@ -12,3 +12,29 @@
 .resource-detail-container {
   flex: 1;
 }
+
+.resource-detail-container {
+  margin: 0 auto;
+}
+
+.resource-detail-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--font-color);
+}
+
+.open-value-modal,
+.open-modal {
+  cursor: pointer;
+}
+.good-price {
+  color: var(--font-color-success) !important;
+}
+
+.bad-price {
+  color: var(--font-color-error) !important;
+}
+
+.chart-container {
+  flex: 7;
+}
