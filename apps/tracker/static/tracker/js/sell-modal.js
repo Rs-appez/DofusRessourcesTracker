@@ -22,6 +22,6 @@ document.body.addEventListener("resourceSellValueAdded", function() {
 });
 
 document.body.addEventListener("htmx:afterSwap", function(event) {
-    if (event.detail.target.id === "wanted-detail-container")
+    if (event.detail.target.id.endsWith("-detail-container"))
         refreshSellElements();
 });
