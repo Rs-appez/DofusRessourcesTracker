@@ -27,6 +27,13 @@
                     </div>
                 </div>
             </div>
+            <div class="resource-detail-entries">
+                {% for resource in resources %}
+                    {% include 'tracker/partials/resource-entry.html' with resource=resource %}
+                {% empty %}
+                    <p>No resources available.</p>
+                {% endfor %}
+            </div>
         </div>
         {% include 'tracker/partials/value-modal.html' %}
         {% include 'tracker/partials/sell-modal.html' with resource=familiar %}
