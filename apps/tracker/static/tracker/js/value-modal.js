@@ -44,7 +44,9 @@ function closeModal() {
 
 refreshElements();
 
-document.body.addEventListener("resourceValueAdded", function() {
+document.body.addEventListener("resourceValueAdded", closeModal);
+
+document.body.addEventListener("wantedValueAdded", function() {
     const url = document.getElementById("wanted-info").dataset.allCardsUrl;
 
     closeModal();
@@ -52,5 +54,5 @@ document.body.addEventListener("resourceValueAdded", function() {
 });
 
 document.body.addEventListener("htmx:afterSwap", function(event) {
-    if (event.detail.target.id === "wanted-detail-container") refreshElements();
+    if (event.detail.target.id.endsWith("-detail-container")) refreshElements();
 });
