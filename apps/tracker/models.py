@@ -39,9 +39,7 @@ class Resource(models.Model):
 
     def add_stats(self):
         self.add_value_stats()
-
-        if self.resource_type == ResourceType.WANTED.value:
-            self.add_sell_stats()
+        self.add_sell_stats()
 
     def add_value_stats(self):
         self.current_value = ResourceValue.get_last_price(self)
@@ -66,11 +64,12 @@ class Resource(models.Model):
             self, days=list(month_values.keys())
         )
 
+        self.days_sell_values = SellOut.get_dated_data(
+            self, days=list(month_values.keys())
+        )
+
         if self.resource_type == ResourceType.WANTED.value:
             self.cards_price = ResourceValue.get_all_cards_price_per_day(
-                self, days=list(month_values.keys())
-            )
-            self.days_sell_values = SellOut.get_dated_data(
                 self, days=list(month_values.keys())
             )
 
@@ -89,9 +88,9 @@ class Resource(models.Model):
         self.days_values = json.dumps(self.days_values)
         self.days_labels = json.dumps(self.days_labels)
         self.empty_values = json.dumps(self.empty_values)
+        self.days_sell_values = json.dumps(self.days_sell_values)
         if self.resource_type == ResourceType.WANTED.value:
             self.cards_price = json.dumps(self.cards_price)
-            self.days_sell_values = json.dumps(self.days_sell_values)
 
 
 class ResourceImage(models.Model):
