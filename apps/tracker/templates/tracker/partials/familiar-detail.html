@@ -1,7 +1,32 @@
-<div class="familiar-detail-container" id="familiar-detail-container">
+<div class="resource-detail-container" id="familiar-detail-container">
     {% if not familiar %}
         <p>Familiar item not found.</p>
     {% else %}
         <h1>{{ familiar.name }}</h1>
+        <div class="familiar-info"
+             id="familiar-info"
+             data-familiar-id="{{ familiar.id }}">
+            <div class="familiar-section">
+                <div class="familiar-header">
+                    <div class="familiar-image">
+                        <img src="{{ familiar.image.image.url }}" alt="{{ familiar.name }}" />
+                    </div>
+                    <div class="chart-container">{% include 'tracker/partials/resource-chart.html' with resource=familiar %}</div>
+                </div>
+                <div class="familiar-data">
+                    <div class="familiar-price-info">
+                        <div id="resource-price-{{ familiar.id }}"
+                             class="open-value-modal"
+                             data-name="{{ familiar.name }}"
+                             data-id="{{ familiar.id }}">
+                            {% include 'tracker/partials/resource-price.html'  with resource=familiar %}
+                        </div>
+                        <div id="sell_values" class="open-modal">
+                            {% include 'tracker/partials/resource-sell-value.html' with resource=familiar %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endif %}
 </div>
