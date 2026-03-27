@@ -68,12 +68,15 @@ def familiar_detail_view(request, familiar_id):
     familiar.add_stats()
     familiar.dumps_stats()
 
+    resources = Resource.objects.filter(use_in=familiar).order_by("name")
+
     formValue = ResourceValueForm()
     fromSell = SellOutValueForm()
     context = {
         "formValue": formValue,
         "formSell": fromSell,
         "familiar": familiar,
+        "resources": resources,
     }
 
     response = render(
