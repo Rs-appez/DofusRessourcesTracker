@@ -1,0 +1,13 @@
+{% load static %}
+{% if not resource %}
+    <p>No data available to display the chart.</p>
+{% else %}
+    <div id="chart-container-{{ resource.id }}"></div>
+    <script type="application/json" id="chart_data_{{ resource.id }}">{{ resource.days_values|safe }}</script>
+    <script type="application/json" id="chart_labels_{{ resource.id }}">{{ resource.days_labels|safe }}</script>
+    <script type="application/json" id="chart_sells_{{ resource.id }}">{{ resource.days_sell_values|safe }}</script>
+    <script type="application/json" id="chart_empty_{{ resource.id }}">{{ resource.empty_values|safe }}</script>
+    <script src="{% static "tracker/js/resource-chart.js" %}"
+            data-id="{{ resource.id}}"
+            defer></script>
+{% endif %}

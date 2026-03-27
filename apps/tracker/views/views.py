@@ -65,7 +65,7 @@ def familiar_view(request):
         "title": "Familier",
         "list_template": "tracker/partials/familiar-list.html",
         "detail_template": "tracker/partials/familiar-detail.html",
-        # "resource_extra_css": "tracker/css/familiar-detail.css",
+        "resource_extra_css": "tracker/css/familiar-detail.css",
         # "resource_extra_js": "tracker/js/familiar-detail.js",
     }
     context.update({"familiars": familiars})
