@@ -101,7 +101,14 @@ def add_value_view(request, resource_id):
     response = render(
         request, "tracker/partials/resource-price.html", {"resource": resource}
     )
-    response["HX-Trigger"] = "resourceValueAdded"
+
+    match resource.resource_type:
+        case ResourceType.WANTED.value:
+            trigger_name = "wantedValueAdded"
+        case _:
+            trigger_name = "resourceValueAdded"
+
+    response["HX-Trigger"] = trigger_name
     return response
 
 
