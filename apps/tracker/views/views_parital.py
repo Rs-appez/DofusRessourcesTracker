@@ -103,7 +103,7 @@ def add_value_view(request, resource_id):
     )
 
     match resource.resource_type:
-        case ResourceType.WANTED.value:
+        case ResourceType.CARD.value:
             trigger_name = "wantedValueAdded"
         case _:
             trigger_name = "resourceValueAdded"
