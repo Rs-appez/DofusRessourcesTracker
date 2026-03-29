@@ -2,12 +2,12 @@
     <p>No data available.</p>
 {% else %}
     {% if resource.current_value is None %}
-        <h4>Empty</h4>
+        <h3>Empty</h3>
     {% else %}
-        <h4 data-current-price="{{ resource.current_value }}"
-            class="current-price">Current Price: {{ resource.current_value_formatted }} K</h4>
+        <h3 data-current-price="{{ resource.current_value }}"
+            class="current-price">Current Price: {{ resource.current_value_formatted }} K</h3>
     {% endif %}
-    <h5 data-median-price="{{ resource.average_value }}" class="median-price">
+    <h4 data-median-price="{{ resource.average_value }}" class="median-price">
         Median Price: {{ resource.average_value_formatted }} K
-    </h5>
+    </h4>
 {% endif %}
