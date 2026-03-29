@@ -38,3 +38,14 @@
 .chart-container {
   flex: 7;
 }
+
+.resource-header {
+  display: flex;
+}
+
+.resource-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+}

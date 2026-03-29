@@ -1,7 +1,17 @@
 <div class="resource-detail">
     {% if resource %}
-        <div class="resource-image">
-            <img src="{{ resource.image.image.url }}" alt="{{ resource.name }}" />
+        <div class="resource-header">
+            <div class="resource-image">
+                <img src="{{ resource.image.image.url }}" alt="{{ resource.name }}" />
+            </div>
+            <div class="resource-info">
+                <div id="resource-price-{{ resource.id }}"
+                     class="open-value-modal"
+                     data-name="{{ resource.name }}"
+                     data-id="{{ resource.id }}">{% include 'tracker/partials/resource-price.html' %}</div>
+                <div id="sell_values" class="open-modal">{% include 'tracker/partials/resource-sell-value.html' %}</div>
+            </div>
         </div>
+        <div class="chart-container">{% include 'tracker/partials/resource-chart.html' %}</div>
     {% endif %}
 </div>
