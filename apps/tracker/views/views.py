@@ -60,7 +60,6 @@ def create_wanted_view(request):
 
 def familiar_view(request):
     familiars = Resource.objects.filter(resource_type=ResourceType.FAMILIAR.value)
-    print("familars : ", familiars)
     context = {
         "title": "Familier",
         "list_template": "tracker/partials/familiar-list.html",
