@@ -5,7 +5,10 @@
         <h3>Empty</h3>
     {% else %}
         <h3 data-current-price="{{ resource.current_value }}"
-            class="current-price">Current Price: {{ resource.current_value_formatted }} K</h3>
+            class="current-price">
+            Current Price: {{ resource.current_value_formatted }} K
+            {% if resource.is_last_value_empty %}<span class="empty-indicator">(Empty)</span>{% endif %}
+        </h3>
     {% endif %}
     <h4 data-median-price="{{ resource.average_value }}" class="median-price">
         Median Price: {{ resource.average_value_formatted }} K

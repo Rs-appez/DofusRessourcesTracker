@@ -49,3 +49,8 @@
   justify-content: space-evenly;
   width: 100%;
 }
+
+.empty-indicator {
+  font-size: 0.8rem;
+  font-style: italic;
+}

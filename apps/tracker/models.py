@@ -60,6 +60,8 @@ class Resource(models.Model):
             (list(x) for x in zip(*data)) if data else ([], [])
         )
 
+        self.is_last_value_empty = ResourceValue.is_last_value_empty(self)
+
         self.empty_values = ResourceValue.get_empty_values(
             self, days=list(month_values.keys())
         )
@@ -115,11 +117,21 @@ class TransactionMixin:
     @classmethod
     def get_last_price(cls, resource: Resource):
         return (
+            cls.objects.filter(resource=resource, price__isnull=False)
+            .order_by("-timestamp")
+            .values_list("price", flat=True)
+            .first()
+        )
+
+    @classmethod
+    def is_last_value_empty(cls, resource: Resource):
+        last_transaction = (
             cls.objects.filter(resource=resource)
             .order_by("-timestamp")
             .values_list("price", flat=True)
             .first()
         )
+        return last_transaction is None
 
     @classmethod
     def get_dated_data(
