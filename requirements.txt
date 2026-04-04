@@ -3,6 +3,6 @@ Django==6.0.4
 django-environ==0.13.0
 gunicorn==25.3.0
 packaging==26.0
-pillow==12.1.1
+pillow==12.2.0
 psycopg2-binary==2.9.11
 sqlparse==0.5.5
